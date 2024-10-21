@@ -17,8 +17,8 @@ class Node(Generic[T]):
     def __repr__(self):
         pass
 
-    @abstractmethod
     @property
+    @abstractmethod
     def value(self) -> T:
         pass
 
@@ -28,7 +28,7 @@ class Node(Generic[T]):
         pass
 
     @abstractmethod
-    def add_edge(self, node: "Node") -> "Edge":
+    def add_edge(self, node: "Node", value: U) -> "Edge":
         """从当前节点添加一条有向边到 node"""
         pass
 
@@ -68,8 +68,8 @@ class Edge(Generic[U]):
         """从图上删除当前边"""
         pass
 
-
-class Graph(ABC):
+class Graph(ABC, Generic[T, U]):
+    """图类，包含节点和边"""
     @abstractmethod
     def __init__(self):
         pass
@@ -80,10 +80,6 @@ class Graph(ABC):
 
     @abstractmethod
     def add_node(self, value: T) -> Node:
-        pass
-
-    @abstractmethod
-    def add_edge(self, from_node: Node, to_node: Node, value: U = None) -> Edge:
         pass
 
     @abstractmethod

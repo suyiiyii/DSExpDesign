@@ -1,16 +1,18 @@
-# 这是一个示例 Python 脚本。
-
-# 按 Ctrl+F5 执行或将其替换为您的代码。
-# 按 双击 Shift 在所有地方搜索类、文件、工具窗口、操作和设置。
+from graph import Graph, Node, Edge, U, T
+from adjacency_list_graph import AdjacencyListNode, AdjacencyListEdge, AdjacencyListGraph
 
 
-def print_hi(name):
-    # 在下面的代码行中使用断点来调试脚本。
-    print(f'Hi, {name}')  # 按 F9 切换断点。
+if __name__ == "__main__":
+    g :Graph[int,int] = AdjacencyListGraph()
+    n1 = g.add_node(1)
+    n2 = g.add_node(2)
+    n3 = g.add_node(3)
+    n1.add_edge(n2, 12)
+    n2.add_edge(n3, 23)
+    n3.add_edge(n1, 31)
+    n1.add_edge(n3, 13)
+    n2.add_edge(n1, 21)
+    print(list(n1.edges))
+    # n2.destroy()
+    # print(list(n1.edges))
 
-
-# 按装订区域中的绿色按钮以运行脚本。
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# 访问 https://www.jetbrains.com/help/pycharm/ 获取 PyCharm 帮助
