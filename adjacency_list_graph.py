@@ -1,4 +1,4 @@
-from typing import Iterator, cast
+from typing import Iterator, cast, Callable
 
 from graph import Graph, Node, Edge, U, T
 
@@ -6,6 +6,7 @@ from graph import Graph, Node, Edge, U, T
 class AdjacencyListEdge(Edge):
 
     def __init__(self, from_node: Node, to_node: Node, value: U = None):
+        self._graph: AdjacencyListGraph
         self._from_node = from_node
         self._to_node = to_node
         self._value = value
@@ -36,6 +37,7 @@ class AdjacencyListEdge(Edge):
 class AdjacencyListNode(Node):
 
     def __init__(self, value: T = None):
+        self._graph: AdjacencyListGraph = None
         self._value: T = value
         self._edge: ["Edge[U]"] = []
 
@@ -52,6 +54,7 @@ class AdjacencyListNode(Node):
 
     def add_edge(self, node: "Node", value: U) -> "Edge":
         new_edge = AdjacencyListEdge(self, node, value)
+        new_edge._graph = self._graph.get_edges_func(lambda x:x)
         self._edge.append(new_edge)
         return new_edge
 
@@ -59,7 +62,14 @@ class AdjacencyListNode(Node):
         self._edge.remove(edge)
 
     def destroy(self):
-        self._edge.clear()
+        # 删除其他节点到当前节点的边
+        for egde in self._graph.get_edges_func(lambda x:x.to_node == self):
+            egde.destroy()
+        # 删除当前节点到其他节点的边
+        for edge in self._edge:
+            edge.destroy()
+        # 删除当前节点
+        self._graph._nodes.remove(self)
 
 
 class AdjacencyListGraph(Graph):
@@ -72,6 +82,7 @@ class AdjacencyListGraph(Graph):
 
     def add_node(self, value: T) -> Node:
         new_node = AdjacencyListNode(value)
+        new_node._graph = self
         self._nodes.append(new_node)
         return new_node
 
@@ -84,4 +95,15 @@ class AdjacencyListGraph(Graph):
         for node in self._nodes:
             for edge in node.edges:
                 if edge.value == value:
+                    yield edge
+
+    def get_nodes_func(self, func: Callable[[Node[T]], bool]) -> Iterator[Node]:
+        for node in self._nodes:
+            if func(node):
+                yield node
+
+    def get_edges_func(self, func: Callable[[Edge[U]], bool]) -> Iterator[Edge]:
+        for node in self._nodes:
+            for edge in node.edges:
+                if func(edge):
                     yield edge

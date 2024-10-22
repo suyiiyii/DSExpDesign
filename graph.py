@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from collections.abc import Iterator
-from typing import TypeVar, Generic
+from typing import TypeVar, Generic, Callable
 
 T = TypeVar("T")
 U = TypeVar("U")
@@ -44,6 +44,7 @@ class Edge(Generic[U]):
     @abstractmethod
     def __init__(self, from_node: Node, to_node: Node, value: U = None):
         pass
+
     @abstractmethod
     def __repr__(self):
         pass
@@ -68,8 +69,10 @@ class Edge(Generic[U]):
         """从图上删除当前边"""
         pass
 
+
 class Graph(ABC, Generic[T, U]):
     """图类，包含节点和边"""
+
     @abstractmethod
     def __init__(self):
         pass
@@ -92,3 +95,8 @@ class Graph(ABC, Generic[T, U]):
         """根据from_node和to_node查找边，使用=运算法"""
         pass
 
+    def get_nodes_func(self, func: Callable[[T], bool]) -> Iterator[Node]:
+        pass
+
+    def get_edges_func(self, func: Callable[[U], bool]) -> Iterator[Edge]:
+        pass

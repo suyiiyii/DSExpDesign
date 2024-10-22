@@ -13,6 +13,6 @@ if __name__ == "__main__":
     n1.add_edge(n3, 13)
     n2.add_edge(n1, 21)
     print(list(n1.edges))
-    # n2.destroy()
-    # print(list(n1.edges))
+    n2.destroy()
+    print(list(n1.edges))
 
