@@ -27,10 +27,7 @@ class AdjacencyListEdge(Edge[U]):
         return self._to_node
 
     def destroy(self):
-        for edge in self._from_node.edges:
-            if edge.to_node == self._to_node:
-                self._from_node.remove_edge(edge)
-                break
+        self._from_node.remove_edge(self)
 
 
 class AdjacencyListNode(Node[T]):
@@ -38,7 +35,7 @@ class AdjacencyListNode(Node[T]):
     def __init__(self, value: T = None):
         self._graph: AdjacencyListGraph = None
         self._value: T = value
-        self._edge: ["AdjacencyListEdge[U]"] = []
+        self._edge: set["AdjacencyListEdge[U]"] = set()
 
     def __repr__(self):
         return f"Node({self._value})"
@@ -58,7 +55,7 @@ class AdjacencyListNode(Node[T]):
     def add_edge(self, node: "AdjacencyListNode[T]", value: U) -> "AdjacencyListEdge[U]":
         new_edge = AdjacencyListEdge(self, node, value)
         new_edge._graph = self._graph.get_edges_func(lambda x: x)
-        self._edge.append(new_edge)
+        self._edge.add(new_edge)
         return new_edge
 
     def remove_edge(self, edge: "AdjacencyListEdge[U]"):
@@ -66,10 +63,10 @@ class AdjacencyListNode(Node[T]):
 
     def destroy(self):
         # 删除其他节点到当前节点的边
-        for edge in self.rev_edges:
+        for edge in list(self.rev_edges):
             edge.destroy()
         # 删除当前节点到其他节点的边
-        for edge in self.edges:
+        for edge in list(self.edges):
             edge.destroy()
         # 删除当前节点
         self._graph._nodes.remove(self)
