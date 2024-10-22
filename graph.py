@@ -25,6 +25,13 @@ class Node(Generic[T]):
     @property
     @abstractmethod
     def edges(self) -> Iterator["Edge"]:
+        """返回以当前节点为起点的边"""
+        pass
+
+    @property
+    @abstractmethod
+    def rev_edges(self) -> Iterator["Edge"]:
+        """返回以当前节点为终点的边"""
         pass
 
     @abstractmethod
@@ -34,7 +41,7 @@ class Node(Generic[T]):
 
     @abstractmethod
     def destroy(self):
-        """从图上删除当前节点"""
+        """从图上删除当前节点，以及所有和当前节点相关的边"""
         pass
 
 

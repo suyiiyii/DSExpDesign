@@ -51,6 +51,10 @@ class AdjacencyListNode(Node[T]):
     def edges(self) -> Iterator["AdjacencyListEdge[U]"]:
         return iter(self._edge)
 
+    @property
+    def rev_edges(self) -> Iterator["Edge"]:
+        return self._graph.get_edges_func(lambda x: x.to_node == self)
+
     def add_edge(self, node: "AdjacencyListNode[T]", value: U) -> "AdjacencyListEdge[U]":
         new_edge = AdjacencyListEdge(self, node, value)
         new_edge._graph = self._graph.get_edges_func(lambda x: x)
@@ -62,10 +66,10 @@ class AdjacencyListNode(Node[T]):
 
     def destroy(self):
         # 删除其他节点到当前节点的边
-        for edge in self._graph.get_edges_func(lambda x: x.to_node == self):
+        for edge in self.rev_edges:
             edge.destroy()
         # 删除当前节点到其他节点的边
-        for edge in self._edge:
+        for edge in self.edges:
             edge.destroy()
         # 删除当前节点
         self._graph._nodes.remove(self)
@@ -85,17 +89,6 @@ class AdjacencyListGraph(Graph):
         self._nodes.append(new_node)
         return new_node
 
-    def get_nodes(self, value: T) -> Iterator[AdjacencyListNode[T]]:
-        for node in self._nodes:
-            if node.value == value:
-                yield node
-
-    def get_edges(self, value: U) -> Iterator[AdjacencyListEdge[U]]:
-        for node in self._nodes:
-            for edge in node.edges:
-                if edge.value == value:
-                    yield edge
-
     def get_nodes_func(self, func: Callable[[AdjacencyListNode[T]], bool]) -> Iterator[AdjacencyListNode[T]]:
         for node in self._nodes:
             if func(node):
@@ -106,3 +99,9 @@ class AdjacencyListGraph(Graph):
             for edge in node.edges:
                 if func(edge):
                     yield edge
+
+    def get_nodes(self, value: T) -> Iterator[AdjacencyListNode[T]]:
+        return self.get_nodes_func(lambda x: x.value == value)
+
+    def get_edges(self, value: U) -> Iterator[AdjacencyListEdge[U]]:
+        return self.get_edges_func(lambda x: x.value == value)
