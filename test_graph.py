@@ -42,7 +42,7 @@ def test_get_nodes(graph: type[Graph]):
 @pytest.mark.parametrize("graph", graph_implementations)
 def test_edges(graph: type[Graph]):
     g: Graph[int, int] = graph()
-    n1 = g.add_node(1)
+    n1 = g.add_node(2)
     n2 = g.add_node(2)
     n3 = g.add_node(3)
     n1.add_edge(n2, 12)
