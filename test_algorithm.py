@@ -52,12 +52,9 @@ def test_topo(graph: type[Graph]):
     assert rank[c] < rank[f]
     assert rank[e] < rank[f]
 
-
 @pytest.mark.parametrize("graph", graph_implementations)
-def test_prim(graph: type[Graph]):
-    from algorithm import prim
-    from graph import Graph
-    from main import print_graph
+@pytest.fixture
+def graph_sample(graph: type[Graph]):
     g: Graph[str, int] = graph()
     g.add_node("A")
     g.add_node("B")
@@ -78,35 +75,36 @@ def test_prim(graph: type[Graph]):
         node2 = next(g.get_nodes(edge[1]))
         node1.add_edge(node2, int(edge[2]))
         node2.add_edge(node1, int(edge[2]))
+    return g
 
-    new_g = prim(g)
+def assert_graph(g: Graph[str, int]):
+    getn = lambda x: next(g.get_nodes(x))
+    a = getn("A")
+    b = getn("B")
+    c = getn("C")
+    d = getn("D")
+    e = getn("E")
+    assert len(list(a.edges)) == 1
+    assert list(a.edges)[0].to_node == b
+    sum = 0
+    for edge in g.get_edges_func(lambda x: True):
+        sum += edge.value
+    assert sum == 30
+
+@pytest.mark.parametrize("graph", graph_implementations)
+def test_prim(graph_sample):
+    from algorithm import prim
+    from main import print_graph
+
+    new_g = prim(graph_sample)
+    assert_graph(new_g)
     print_graph(new_g)
 
 
 @pytest.mark.parametrize("graph", graph_implementations)
-def test_kruskal(graph: type[Graph]):
-    from graph import Graph
+def test_kruskal(graph_sample):
     from main import print_graph
-    g: Graph[str, int] = graph()
-    g.add_node("A")
-    g.add_node("B")
-    g.add_node("C")
-    g.add_node("D")
-    g.add_node("E")
+    new_g = kruskal(graph_sample)
+    assert_graph(new_g)
 
-    edges = ["A B 3",
-             "A D 8",
-             "A E 10",
-             "B D 6",
-             "D E 9",
-             "E C 12",
-             "B C 15"]
-    for edge in edges:
-        edge = edge.split()
-        node1 = next(g.get_nodes(edge[0]))
-        node2 = next(g.get_nodes(edge[1]))
-        node1.add_edge(node2, int(edge[2]))
-        node2.add_edge(node1, int(edge[2]))
-
-    new_g = kruskal(g)
     print_graph(new_g)
