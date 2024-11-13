@@ -45,6 +45,42 @@ def add_edge(g:Graph):
     else:
         print("Node not found")
 
+
+def del_node(g: Graph):
+    """根据 value 删除节点"""
+    val = input("Please input the value of the node:")
+    node = list(g.get_nodes_func(lambda x: x.value == val))
+    if not node:
+        print("Node not found")
+        return
+    node[0].destroy()
+
+
+def del_edge(g: Graph):
+    """根据 value 删除边"""
+    val = input("Please input the value of the edge:")
+    node1 = input("Please input the value of the from node:")
+    node2 = input("Please input the value of the to node:")
+    node1 = list(g.get_nodes_func(lambda x: x.value == node1))
+    node2 = list(g.get_nodes_func(lambda x: x.value == node2))
+    if not val:
+        print("Value cannot be empty")
+        return
+    if not node1:
+        print("From node not found")
+        return
+    if not node2:
+        print("To node not found")
+        return
+    if node1 and node2:
+        for edge in list(node1[0].edges):
+            if edge.to_node == node2[0] and edge.value == int(val):
+                edge.destroy()
+                return
+        print("Edge not found")
+    else:
+        print("Node not found")
+
 def print_graph(g:Graph):
     """打印图"""
     print("Current graph:")
@@ -109,6 +145,9 @@ if __name__ == "__main__":
         print(f"{i}: {impl.__name__}")
     idx = input("Please input the index of the implementation you want to test: ")
 
+    if idx not in ["0", "1"]:
+        print("Invalid index")
+        exit(1)
     g: Graph[str, int] = impls[int(idx)]()
 
     while True:
@@ -116,10 +155,13 @@ if __name__ == "__main__":
         print("\n\n\n")
         print_graph(g)
         print()
-        method = [add_node, add_edge, run_dij, run_topo, run_prim, run_kruskal]
+        method = [add_node, add_edge, del_node, del_edge, run_dij, run_topo, run_prim, run_kruskal]
         for i, m in enumerate(method):
             print(f"{i}: {m.__name__}")
         idx = input("Please input the index of the method you want to test: ")
+        if idx not in [str(i) for i in range(len(method))]:
+            print("Invalid index")
+            continue
         method[int(idx)](g)
 
 
