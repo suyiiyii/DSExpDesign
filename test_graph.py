@@ -1,9 +1,10 @@
 import pytest
 
 from adjacency_list_graph import AdjacencyListGraph
+from adjacency_matrix_graph import AdjacencyMatrixGraph
 from graph import Graph
 
-graph_implementations = [AdjacencyListGraph]  # Add other Graph implementations to this list
+graph_implementations = [AdjacencyListGraph, AdjacencyMatrixGraph]  # Add other Graph implementations to this list
 
 
 @pytest.mark.parametrize("graph", graph_implementations)

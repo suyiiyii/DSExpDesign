@@ -1,10 +1,13 @@
-from adjacency_list_graph import AdjacencyListGraph
+import pytest
+
 from algorithm import dijkstra, topo_sort, kruskal
 from graph import Graph
+from test_graph import graph_implementations
 
 
-def test_dijkstra():
-    g: Graph[int, int] = AdjacencyListGraph()
+@pytest.mark.parametrize("graph", graph_implementations)
+def test_dijkstra(graph: type[Graph]):
+    g: Graph[int, int] = graph()
     n1 = g.add_node(1)
     n2 = g.add_node(2)
     n3 = g.add_node(3)
@@ -20,33 +23,42 @@ def test_dijkstra():
     assert dst[1] == [n1, n3, n4]
 
 
-def test_topo():
-    g: Graph[str, int] = AdjacencyListGraph()
-    g.add_node("A")
-    g.add_node("B")
-    g.add_node("C")
-    g.add_node("D")
-    g.add_node("E")
-    g.add_node("F")
-    next(g.get_nodes("A")).add_edge(next(g.get_nodes("B")), 1)
-    next(g.get_nodes("B")).add_edge(next(g.get_nodes("C")), 1)
-    next(g.get_nodes("C")).add_edge(next(g.get_nodes("F")), 1)
-    next(g.get_nodes("A")).add_edge(next(g.get_nodes("D")), 1)
-    next(g.get_nodes("D")).add_edge(next(g.get_nodes("E")), 1)
-    next(g.get_nodes("E")).add_edge(next(g.get_nodes("F")), 1)
+@pytest.mark.parametrize("graph", graph_implementations)
+def test_topo(graph: type[Graph]):
+    g: Graph[str, int] = graph()
+    a = g.add_node("A")
+    b = g.add_node("B")
+    c = g.add_node("C")
+    d = g.add_node("D")
+    e = g.add_node("E")
+    f = g.add_node("F")
+    a.add_edge(b, 1)
+    b.add_edge(c, 1)
+    c.add_edge(f, 1)
+    a.add_edge(d, 1)
+    d.add_edge(e, 1)
+    e.add_edge(f, 1)
 
     ret = topo_sort(g)
     print(ret)
-    assert ret == [next(g.get_nodes("A")), next(g.get_nodes("B")), next(g.get_nodes("D")), next(g.get_nodes("C")),
-                   next(g.get_nodes("E")), next(g.get_nodes("F")), ]
+    # assert ret == [next(g.get_nodes("A")), next(g.get_nodes("B")), next(g.get_nodes("D")), next(g.get_nodes("C")),
+    #                next(g.get_nodes("E")), next(g.get_nodes("F")), ]
+    # 拓扑排序结果不唯一
+    rank = {node: i for i, node in enumerate(ret)}
+    assert rank[a] < rank[b]
+    assert rank[b] < rank[c]
+    assert rank[a] < rank[d]
+    assert rank[d] < rank[e]
+    assert rank[c] < rank[f]
+    assert rank[e] < rank[f]
 
 
-def test_prim():
-    from adjacency_list_graph import AdjacencyListGraph
+@pytest.mark.parametrize("graph", graph_implementations)
+def test_prim(graph: type[Graph]):
     from algorithm import prim
     from graph import Graph
     from main import print_graph
-    g: Graph[str, int] = AdjacencyListGraph()
+    g: Graph[str, int] = graph()
     g.add_node("A")
     g.add_node("B")
     g.add_node("C")
@@ -71,11 +83,11 @@ def test_prim():
     print_graph(new_g)
 
 
-def test_kruskal():
-    from adjacency_list_graph import AdjacencyListGraph
+@pytest.mark.parametrize("graph", graph_implementations)
+def test_kruskal(graph: type[Graph]):
     from graph import Graph
     from main import print_graph
-    g: Graph[str, int] = AdjacencyListGraph()
+    g: Graph[str, int] = graph()
     g.add_node("A")
     g.add_node("B")
     g.add_node("C")

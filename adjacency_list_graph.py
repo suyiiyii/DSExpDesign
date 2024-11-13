@@ -27,7 +27,7 @@ class AdjacencyListEdge(Edge[U]):
         return self._to_node
 
     def destroy(self):
-        self._from_node.remove_edge(self)
+        self._from_node._remove_edge(self)
 
 
 class AdjacencyListNode(Node[T]):
@@ -58,7 +58,7 @@ class AdjacencyListNode(Node[T]):
         self._edge.add(new_edge)
         return new_edge
 
-    def remove_edge(self, edge: "AdjacencyListEdge[U]"):
+    def _remove_edge(self, edge: "AdjacencyListEdge[U]"):
         self._edge.remove(edge)
 
     def destroy(self):

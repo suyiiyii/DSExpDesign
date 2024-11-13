@@ -92,18 +92,18 @@ class Graph(ABC, Generic[T, U]):
     def add_node(self, value: T) -> Node:
         pass
 
-    @abstractmethod
     def get_nodes(self, value: T) -> Iterator[Node]:
         """根据value查找节点，使用=运算法"""
-        pass
+        return self.get_nodes_func(lambda x: x.value == value)
 
-    @abstractmethod
     def get_edges(self, value: U) -> Iterator[Edge]:
         """根据from_node和to_node查找边，使用=运算法"""
-        pass
+        return self.get_edges_func(lambda x: x.value == value)
 
+    @abstractmethod
     def get_nodes_func(self, func: Callable[[T], bool]) -> Iterator[Node]:
         pass
 
+    @abstractmethod
     def get_edges_func(self, func: Callable[[U], bool]) -> Iterator[Edge]:
         pass
