@@ -1,7 +1,8 @@
 import os
 
 from adjacency_list_graph import AdjacencyListGraph
-from algorithm import dijkstra, topo_sort
+from adjacency_matrix_graph import AdjacencyMatrixGraph
+from algorithm import dijkstra, topo_sort, prim, kruskal
 from graph import Graph
 
 
@@ -87,9 +88,23 @@ def run_topo(g:Graph):
     print("Topological order:")
     print(" -> ".join([node.value for node in ans]))
 
+
+def run_prim(g: Graph):
+    """运行Prim算法"""
+    new_g = prim(g)
+    print("New graph:")
+    print_graph(new_g)
+
+
+def run_kruskal(g: Graph):
+    """运行Kruskal算法"""
+    new_g = kruskal(g)
+    print("New graph:")
+    print_graph(new_g)
+
 if __name__ == "__main__":
 
-    impls = [AdjacencyListGraph]
+    impls = [AdjacencyListGraph, AdjacencyMatrixGraph]
     for i, impl in enumerate(impls):
         print(f"{i}: {impl.__name__}")
     idx = input("Please input the index of the implementation you want to test: ")
@@ -101,7 +116,7 @@ if __name__ == "__main__":
         print("\n\n\n")
         print_graph(g)
         print()
-        method = [add_node, add_edge,run_dij,run_topo]
+        method = [add_node, add_edge, run_dij, run_topo, run_prim, run_kruskal]
         for i, m in enumerate(method):
             print(f"{i}: {m.__name__}")
         idx = input("Please input the index of the method you want to test: ")
