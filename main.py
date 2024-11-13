@@ -81,6 +81,28 @@ def del_edge(g: Graph):
     else:
         print("Node not found")
 
+def get_edges_by_node(g:Graph):
+    """根据节点获取边"""
+    val = input("Please input the value of the node:")
+    node = list(g.get_nodes_func(lambda x:x.value == val))
+    if not node:
+        print("Node not found")
+        return
+    print(f"Edges of node {val}:")
+    for edge in node[0].edges:
+        print(f" -> {edge.to_node.value} : {edge.value}")
+
+def get_rev_edges_by_node(g:Graph):
+    """根据节点获取反向边"""
+    val = input("Please input the value of the node:")
+    node = list(g.get_nodes_func(lambda x:x.value == val))
+    if not node:
+        print("Node not found")
+        return
+    print(f"Reverse edges of node {val}:")
+    for edge in node[0].rev_edges:
+        print(f" <- {edge.from_node.value} : {edge.value}")
+
 def print_graph(g:Graph):
     """打印图"""
     print("Current graph:")
@@ -155,7 +177,7 @@ if __name__ == "__main__":
         print("\n\n\n")
         print_graph(g)
         print()
-        method = [add_node, add_edge, del_node, del_edge, run_dij, run_topo, run_prim, run_kruskal]
+        method = [add_node, add_edge, del_node, del_edge,get_edges_by_node,get_rev_edges_by_node, run_dij, run_topo, run_prim, run_kruskal]
         for i, m in enumerate(method):
             print(f"{i}: {m.__name__}")
         idx = input("Please input the index of the method you want to test: ")
