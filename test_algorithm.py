@@ -94,7 +94,7 @@ def assert_graph(g: Graph[str, int]):
 @pytest.mark.parametrize("graph", graph_implementations)
 def test_prim(graph_sample):
     from algorithm import prim
-    from main import print_graph
+    from ds_test import print_graph
 
     new_g = prim(graph_sample)
     assert_graph(new_g)
@@ -103,7 +103,7 @@ def test_prim(graph_sample):
 
 @pytest.mark.parametrize("graph", graph_implementations)
 def test_kruskal(graph_sample):
-    from main import print_graph
+    from ds_test import print_graph
     new_g = kruskal(graph_sample)
     assert_graph(new_g)
 
