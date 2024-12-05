@@ -1,9 +1,9 @@
 import os
 
-from base_struct.adjacency_list_graph import AdjacencyListGraph
-from base_struct.adjacency_matrix_graph import AdjacencyMatrixGraph
-from base_struct.algorithm import dijkstra, topo_sort, prim, kruskal
-from base_struct.graph import Graph
+from app.base_struct.adjacency_list_graph import AdjacencyListGraph
+from app.base_struct.adjacency_matrix_graph import AdjacencyMatrixGraph
+from app.base_struct.algorithm import dijkstra, topo_sort, prim, kruskal
+from app.base_struct.graph import Graph
 
 
 def clear_console():
@@ -165,7 +165,7 @@ if __name__ == "__main__":
     impls = [AdjacencyListGraph, AdjacencyMatrixGraph]
     for i, impl in enumerate(impls):
         print(f"{i}: {impl.__name__}")
-    idx = input("Please input the index of the implementation you want to test: ")
+    idx = input("Please input the index of the implementation you want to tests: ")
 
     if idx not in ["0", "1"]:
         print("Invalid index")
@@ -180,7 +180,7 @@ if __name__ == "__main__":
         method = [add_node, add_edge, del_node, del_edge,get_edges_by_node,get_rev_edges_by_node, run_dij, run_topo, run_prim, run_kruskal]
         for i, m in enumerate(method):
             print(f"{i}: {m.__name__}")
-        idx = input("Please input the index of the method you want to test: ")
+        idx = input("Please input the index of the method you want to tests: ")
         if idx not in [str(i) for i in range(len(method))]:
             print("Invalid index")
             continue

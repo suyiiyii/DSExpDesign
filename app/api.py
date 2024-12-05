@@ -3,7 +3,7 @@ from fastapi import FastAPI
 import models
 from store import db
 
-app = FastAPI()
+app = FastAPI(root_path="/api")
 
 
 @app.get("/city", response_model=list[models.City])

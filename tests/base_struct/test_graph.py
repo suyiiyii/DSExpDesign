@@ -1,8 +1,8 @@
 import pytest
 
-from base_struct.adjacency_list_graph import AdjacencyListGraph
-from base_struct.adjacency_matrix_graph import AdjacencyMatrixGraph
-from base_struct.graph import Graph
+from app.base_struct.adjacency_list_graph import AdjacencyListGraph
+from app.base_struct.adjacency_matrix_graph import AdjacencyMatrixGraph
+from app.base_struct.graph import Graph
 
 graph_implementations = [AdjacencyListGraph, AdjacencyMatrixGraph]  # Add other Graph implementations to this list
 

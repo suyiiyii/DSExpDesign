@@ -1,7 +1,7 @@
 import pytest
 
-from base_struct.algorithm import dijkstra, topo_sort, kruskal
-from base_struct.graph import Graph
+from app.base_struct.algorithm import dijkstra, topo_sort, kruskal
+from app.base_struct.graph import Graph
 from test_graph import graph_implementations
 
 
@@ -93,8 +93,8 @@ def assert_graph(g: Graph[str, int]):
 
 @pytest.mark.parametrize("graph", graph_implementations)
 def test_prim(graph_sample):
-    from base_struct.algorithm import prim
-    # from test.base_struct.ds_test import print_graph
+    from app.base_struct.algorithm import prim
+    # from tests.base_struct.ds_test import print_graph
 
     new_g = prim(graph_sample)
     assert_graph(new_g)
@@ -103,7 +103,7 @@ def test_prim(graph_sample):
 
 @pytest.mark.parametrize("graph", graph_implementations)
 def test_kruskal(graph_sample):
-    # from test.base_struct.ds_test import print_graph
+    # from tests.base_struct.ds_test import print_graph
     new_g = kruskal(graph_sample)
     assert_graph(new_g)
 

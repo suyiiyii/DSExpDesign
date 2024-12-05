@@ -11,15 +11,15 @@ class Database:
         self._generate_graph()
 
     def _store(self):
-        with open("city.json", "w", encoding="utf-8") as f:
+        with open("../data/city.json", "w", encoding="utf-8") as f:
             f.write(json.dumps([city.__dict__ for city in self._cities]))
-        with open("transport.json", "w", encoding="utf-8") as f:
+        with open("../data/transport.json", "w", encoding="utf-8") as f:
             f.write(json.dumps([transport.__dict__ for transport in self._transports]))
         print("Data stored successfully")
         return
 
     def _generate_graph(self):
-        with open("graph.md", "w", encoding="utf-8") as f:
+        with open("../graph.md", "w", encoding="utf-8") as f:
             f.write("# 线路图\n")
             f.write("```mermaid\n")
             f.write("graph\n")
@@ -29,9 +29,9 @@ class Database:
             f.write("```")
 
     def _load(self) -> (list[City], list[Transport]):
-        with open("city.json", "r", encoding="utf-8") as f:
+        with open("./data/city.json", "r", encoding="utf-8") as f:
             cities = [City(**city) for city in json.loads(f.read())]
-        with open("transport.json", "r", encoding="utf-8") as f:
+        with open("./data/transport.json", "r", encoding="utf-8") as f:
             transports = [Transport(**transport) for transport in json.loads(f.read())]
         return cities, transports
 
