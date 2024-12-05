@@ -1,6 +1,6 @@
 import queue
 
-from graph import Graph, Node
+from .graph import Graph, Node
 
 
 def dijkstra(g: Graph[int, int], start: Node[int], end: Node[int]) -> (int, list[Node[int]]):

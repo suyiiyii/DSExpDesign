@@ -94,17 +94,17 @@ def assert_graph(g: Graph[str, int]):
 @pytest.mark.parametrize("graph", graph_implementations)
 def test_prim(graph_sample):
     from base_struct.algorithm import prim
-    from test.base_struct.ds_test import print_graph
+    # from test.base_struct.ds_test import print_graph
 
     new_g = prim(graph_sample)
     assert_graph(new_g)
-    print_graph(new_g)
+    # print_graph(new_g)
 
 
 @pytest.mark.parametrize("graph", graph_implementations)
 def test_kruskal(graph_sample):
-    from test.base_struct.ds_test import print_graph
+    # from test.base_struct.ds_test import print_graph
     new_g = kruskal(graph_sample)
     assert_graph(new_g)
 
-    print_graph(new_g)
+    # print_graph(new_g)

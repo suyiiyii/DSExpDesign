@@ -1,6 +1,6 @@
 from typing import Iterator, Callable
 
-from graph import Graph, Node, Edge, U, T
+from .graph import Graph, Node, Edge, U, T
 
 
 class AdjacencyListEdge(Edge[U]):
