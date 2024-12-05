@@ -52,6 +52,7 @@ def test_topo(graph: type[Graph]):
     assert rank[c] < rank[f]
     assert rank[e] < rank[f]
 
+
 @pytest.mark.parametrize("graph", graph_implementations)
 @pytest.fixture
 def graph_sample(graph: type[Graph]):
@@ -77,6 +78,7 @@ def graph_sample(graph: type[Graph]):
         node2.add_edge(node1, int(edge[2]))
     return g
 
+
 def assert_graph(g: Graph[str, int]):
     getn = lambda x: next(g.get_nodes(x))
     a = getn("A")
@@ -90,6 +92,7 @@ def assert_graph(g: Graph[str, int]):
     for edge in g.get_edges_func(lambda x: True):
         sum += edge.value
     assert sum == 30
+
 
 @pytest.mark.parametrize("graph", graph_implementations)
 def test_prim(graph_sample):

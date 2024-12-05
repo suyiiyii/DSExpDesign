@@ -67,6 +67,7 @@ def prim(g: Graph[any, int]) -> Graph[any, int]:
         from_node.add_edge(to_node, min_edge.value)
     return new_g
 
+
 def kruskal(g: Graph[any, int]) -> Graph[any, int]:
     """Kruskal算法，返回最小生成树"""
     nodes = list(g.get_nodes_func(lambda x: True))
@@ -76,14 +77,17 @@ def kruskal(g: Graph[any, int]) -> Graph[any, int]:
         new_g.add_node(node.value)
     # 初始化并查集
     parent = {}
+
     def find(x):
         if x not in parent:
             parent[x] = x
         if parent[x] != x:
             parent[x] = find(parent[x])
         return parent[x]
+
     def union(x, y):
         parent[find(x)] = find(y)
+
     def same(x, y):
         return find(x) == find(y)
 

@@ -2,6 +2,9 @@ import json
 
 from models import City, Transport
 
+DATA_CITY_PATH = "./data/city.json"
+DATA_TRANSPORT_PATH = "./data/transport.json"
+
 
 class Database:
 
@@ -11,9 +14,9 @@ class Database:
         self._generate_graph()
 
     def _store(self):
-        with open("../data/city.json", "w", encoding="utf-8") as f:
+        with open(DATA_CITY_PATH, "w", encoding="utf-8") as f:
             f.write(json.dumps([city.__dict__ for city in self._cities]))
-        with open("../data/transport.json", "w", encoding="utf-8") as f:
+        with open(DATA_TRANSPORT_PATH, "w", encoding="utf-8") as f:
             f.write(json.dumps([transport.__dict__ for transport in self._transports]))
         print("Data stored successfully")
         return
@@ -29,9 +32,9 @@ class Database:
             f.write("```")
 
     def _load(self) -> (list[City], list[Transport]):
-        with open("./data/city.json", "r", encoding="utf-8") as f:
+        with open(DATA_CITY_PATH, "r", encoding="utf-8") as f:
             cities = [City(**city) for city in json.loads(f.read())]
-        with open("./data/transport.json", "r", encoding="utf-8") as f:
+        with open(DATA_TRANSPORT_PATH, "r", encoding="utf-8") as f:
             transports = [Transport(**transport) for transport in json.loads(f.read())]
         return cities, transports
 
@@ -42,6 +45,14 @@ class Database:
     @property
     def transports(self) -> list[Transport]:
         return self._transports
+
+    def add_city(self, city: City):
+        self._cities.append(city)
+        self._store()
+
+    def add_transport(self, transport: Transport):
+        self._transports.append(transport)
+        self._store()
 
 
 db = Database()

@@ -5,6 +5,7 @@ from dataclasses import dataclass
 class City:
     name: str
 
+
 @dataclass
 class Transport:
     type: str
@@ -15,4 +16,3 @@ class Transport:
     start_time: str
     end_time: str
     run_id: str
-
