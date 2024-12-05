@@ -3,8 +3,17 @@
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/.venv" />
+      <excludeFolder url="file://$MODULE_DIR$/app/static" />
+      <excludeFolder url="file://$MODULE_DIR$/frontend/build" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+  <component name="PyNamespacePackagesService">
+    <option name="namespacePackageFolders">
+      <list>
+        <option value="$MODULE_DIR$/app/base_struct" />
+      </list>
+    </option>
   </component>
 </module>
