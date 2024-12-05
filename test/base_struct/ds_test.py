@@ -1,9 +1,9 @@
 import os
 
-from adjacency_list_graph import AdjacencyListGraph
-from adjacency_matrix_graph import AdjacencyMatrixGraph
-from algorithm import dijkstra, topo_sort, prim, kruskal
-from graph import Graph
+from base_struct.adjacency_list_graph import AdjacencyListGraph
+from base_struct.adjacency_matrix_graph import AdjacencyMatrixGraph
+from base_struct.algorithm import dijkstra, topo_sort, prim, kruskal
+from base_struct.graph import Graph
 
 
 def clear_console():
