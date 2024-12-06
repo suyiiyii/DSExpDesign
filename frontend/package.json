@@ -17,6 +17,7 @@
     "@types/react": "^18.3.13",
     "@types/react-dom": "^18.3.1",
     "frontend": "file:",
+    "mermaid": "^11.4.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-redux": "^9.1.2",

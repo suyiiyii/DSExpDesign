@@ -11,8 +11,7 @@ import {
 import React from "react";
 import {useGetCityListQuery} from "../cityManager/cityConfigSlice";
 
-
-export function PlanView() {
+export default function PlanView() {
     const cityList = useGetCityListQuery().data || []
     const cityItemList = cityList.map((city) => {
         return {
