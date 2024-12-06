@@ -16,7 +16,6 @@ const style = {
 
 function CityView() {
     const cityList = useGetCityListQuery().data || []
-    console.log(cityList)
     return (
         <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
             <h1>City View</h1>

@@ -17,13 +17,12 @@ const style = {
 
 function TransportView() {
     const transportList = useGetTransportListQuery().data || [];
-    console.log(transportList);
     return (
         <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
             <h1>Transport View</h1>
             <List sx={style}>
                 {transportList.map((transport, index) => (
-                    <React.Fragment key={transport.name}>
+                    <React.Fragment key={JSON.stringify(transport)}>
                         <ListItem
                             secondaryAction={
                                 <IconButton edge="end" aria-label="delete">
