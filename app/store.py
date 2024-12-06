@@ -15,9 +15,9 @@ class Database:
 
     def _store(self):
         with open(DATA_CITY_PATH, "w", encoding="utf-8") as f:
-            f.write(json.dumps([city.__dict__ for city in self._cities]))
+            f.write(json.dumps([city.__dict__ for city in self._cities], ensure_ascii=False, indent=2))
         with open(DATA_TRANSPORT_PATH, "w", encoding="utf-8") as f:
-            f.write(json.dumps([transport.__dict__ for transport in self._transports]))
+            f.write(json.dumps([transport.__dict__ for transport in self._transports], ensure_ascii=False, indent=2))
         print("Data stored successfully")
         return
 
