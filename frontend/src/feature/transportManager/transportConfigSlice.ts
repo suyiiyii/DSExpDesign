@@ -1,5 +1,5 @@
 import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
-import {Transport} from "../utils/types";
+import {Transport} from "../../utils/types";
 
 
 export const transportConfigSlice = createApi({
