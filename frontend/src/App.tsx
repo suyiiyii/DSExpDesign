@@ -2,6 +2,8 @@ import React from 'react';
 import './App.css';
 import {Box, Tab, Tabs} from "@mui/material";
 import {PlanView} from "./feature/pathPlan/PathPlan";
+import {store} from "./app/store";
+import {Provider} from "react-redux";
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -34,24 +36,26 @@ function App() {
     }
 
     return (
-        <div className="App">
-            <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
-                <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                    <Tab label="路径规划"/>
-                    <Tab label="地点查询"/>
-                    <Tab label="路线查询"/>
-                </Tabs>
-            </Box>
-            <CustomTabPanel value={value} index={0}>
-                <PlanView/>
-            </CustomTabPanel>
-            <CustomTabPanel value={value} index={1}>
-                Item Two
-            </CustomTabPanel>
-            <CustomTabPanel value={value} index={2}>
-                Item Three
-            </CustomTabPanel>
-        </div>
+        <Provider store={store}>
+            <div className="App">
+                <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
+                    <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+                        <Tab label="路径规划"/>
+                        <Tab label="地点查询"/>
+                        <Tab label="路线查询"/>
+                    </Tabs>
+                </Box>
+                <CustomTabPanel value={value} index={0}>
+                    <PlanView/>
+                </CustomTabPanel>
+                <CustomTabPanel value={value} index={1}>
+                    Item Two
+                </CustomTabPanel>
+                <CustomTabPanel value={value} index={2}>
+                    Item Three
+                </CustomTabPanel>
+            </div>
+        </Provider>
     );
 }
 
