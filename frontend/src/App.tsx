@@ -1,9 +1,11 @@
-import React from 'react';
-import './App.css';
+import React from "react";
+import "./App.css";
 import {Box, Tab, Tabs} from "@mui/material";
 import {PlanView} from "./feature/pathPlan/PathPlan";
 import {store} from "./app/store";
 import {Provider} from "react-redux";
+import CityView from "./feature/cityManager/CityView";
+import TransportView from "./transportManager/TransportView";
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -27,7 +29,6 @@ function CustomTabPanel(props: TabPanelProps) {
     );
 }
 
-
 function App() {
     const [value, setValue] = React.useState(0);
 
@@ -38,8 +39,12 @@ function App() {
     return (
         <Provider store={store}>
             <div className="App">
-                <Box sx={{borderBottom: 1, borderColor: 'divider'}}>
-                    <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+                <Box sx={{borderBottom: 1, borderColor: "divider"}}>
+                    <Tabs
+                        value={value}
+                        onChange={handleChange}
+                        aria-label="basic tabs example"
+                    >
                         <Tab label="路径规划"/>
                         <Tab label="地点查询"/>
                         <Tab label="路线查询"/>
@@ -49,10 +54,10 @@ function App() {
                     <PlanView/>
                 </CustomTabPanel>
                 <CustomTabPanel value={value} index={1}>
-                    Item Two
+                    <CityView/>
                 </CustomTabPanel>
                 <CustomTabPanel value={value} index={2}>
-                    Item Three
+                    <TransportView/>
                 </CustomTabPanel>
             </div>
         </Provider>
