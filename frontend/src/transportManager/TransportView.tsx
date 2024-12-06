@@ -1,7 +1,9 @@
 import React from "react";
-import {Divider, IconButton, List, ListItem, ListItemText} from "@mui/material";
+import {Divider, IconButton, List, ListItem, ListItemIcon, ListItemText} from "@mui/material";
 import {useGetTransportListQuery} from "./transportConfigSlice";
 import DeleteIcon from '@mui/icons-material/Delete';
+import TrainIcon from '@mui/icons-material/Train';
+import FlightIcon from '@mui/icons-material/Flight';
 
 const style = {
     py: 0,
@@ -29,6 +31,10 @@ function TransportView() {
                                 </IconButton>
                             }
                         >
+                            <ListItemIcon>
+                                {transport.type === 'train' ? <TrainIcon/> : <FlightIcon/>}
+
+                            </ListItemIcon>
                             <ListItemText primary={`${transport.start} --${transport.name}-> ${transport.end}`}/>
                         </ListItem>
                         {index !== transportList.length - 1 && (
