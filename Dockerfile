@@ -1,5 +1,5 @@
 # 使用 node:20-slim 作为基础镜像
-FROM cr.suyiiyii.top/docker.io/library/node:22-alpine AS frontend-builder
+FROM node:22-alpine AS frontend-builder
 
 WORKDIR /app
 
@@ -17,7 +17,7 @@ RUN pnpm run build
 
 
 # 使用官方的 Python 基础镜像
-FROM cr.suyiiyii.top/docker.io/library/python:3.11-slim AS base
+FROM python:3.11-slim AS base
 
 # 设置工作目录
 WORKDIR /app
