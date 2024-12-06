@@ -5,7 +5,7 @@ import PlanView from "./feature/pathPlan/PathPlan";
 import {store} from "./app/store";
 import {Provider} from "react-redux";
 import CityView from "./feature/cityManager/CityView";
-import TransportView from "./transportManager/TransportView";
+import TransportView from "./feature/transportManager/TransportView";
 import RouteMapView from "./feature/routeMap/RouteMapView";
 import AltRouteIcon from '@mui/icons-material/AltRoute';
 import LocationCityIcon from '@mui/icons-material/LocationCity';

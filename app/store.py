@@ -11,7 +11,7 @@ class Database:
     def __init__(self):
         self._cities: list[City] = self._load()[0]
         self._transports: list[Transport] = self._load()[1]
-        self._generate_graph()
+        self._save_route_map()
 
     def _store(self):
         with open(DATA_CITY_PATH, "w", encoding="utf-8") as f:
@@ -21,15 +21,23 @@ class Database:
         print("Data stored successfully")
         return
 
-    def _generate_graph(self):
+    def _generate_graph(self) -> str:
+        graph = ""
+        graph += "graph\n"
+        '''深圳 -- G2944 --> 广州'''
+        for transport in self._transports:
+            graph += f"\t{transport.start} -- {transport.run_id} --> {transport.end}\n"
+        return graph
+
+    def _save_route_map(self):
+        graph = ""
+        graph += "# 线路图\n"
+        graph += "```mermaid\n"
+        graph += self._generate_graph()
+        graph += "```"
         with open("../graph.md", "w", encoding="utf-8") as f:
-            f.write("# 线路图\n")
-            f.write("```mermaid\n")
-            f.write("graph\n")
-            '''深圳 -- G2944 --> 广州'''
-            for transport in self._transports:
-                f.write(f"\t{transport.start} -- {transport.run_id} --> {transport.end}\n")
-            f.write("```")
+            f.write(graph)
+
 
     def _load(self) -> (list[City], list[Transport]):
         with open(DATA_CITY_PATH, "r", encoding="utf-8") as f:
@@ -45,6 +53,10 @@ class Database:
     @property
     def transports(self) -> list[Transport]:
         return self._transports
+
+    @property
+    def route_map(self) -> str:
+        return self._generate_graph()
 
     def add_city(self, city: City):
         self._cities.append(city)

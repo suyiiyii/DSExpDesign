@@ -29,4 +29,9 @@ async def add_transport(transport: Transport):
     return transport
 
 
+@api.get("/routeMap", response_model=dict[str, str])
+async def get_route_map():
+    return {"data": db.route_map}
+
+
 api.mount("", app=StaticFiles(directory="app/static", html=True), name="static")

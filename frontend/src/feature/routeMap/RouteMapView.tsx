@@ -1,19 +1,18 @@
 import React from "react";
-import MermaidChart from "../mermaid/MermaidChart";
-  const chartDefinition = `
-    graph TD;
-      A-->B;
-      A-->C;
-      B-->D;
-      C-->D;
-  `;
+import MermaidChart from "../../utils/mermaid/MermaidChart";
+import {useGetRouteMapQuery} from "./routeMapSlice";
 
-export default function RouteMapView(){
-
+export default function RouteMapView() {
+    const chart = useGetRouteMapQuery().data || {data: ""};
+    console.log(chart)
     return (
         <div>
             <h1>Route Map</h1>
-            <MermaidChart chart={chartDefinition}></MermaidChart>
+            {chart.data === "" ? (
+                <div>loading...</div>
+            ) : (
+                <MermaidChart chart={`${chart.data}`}></MermaidChart>
+            )}
         </div>
     )
 }
