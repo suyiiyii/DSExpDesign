@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
 import {Box, Tab, Tabs} from "@mui/material";
-import PlanView from "./feature/pathPlan/PathPlan";
+import PlanView from "./feature/routePlan/routePlan";
 import {store} from "./app/store";
 import {Provider} from "react-redux";
 import CityView from "./feature/cityManager/CityView";

@@ -20,7 +20,7 @@ export default function PlanView() {
     })
     return (
         <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
-            <h1>Path Plan</h1>
+            <h1>Route Plan</h1>
             <div>
 
                 <FormControl>
