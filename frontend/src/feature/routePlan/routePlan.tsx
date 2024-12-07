@@ -8,21 +8,30 @@ import {
     RadioGroup,
     TextField
 } from "@mui/material";
-import React from "react";
+import React, {useState} from "react";
 import {useGetCityListQuery} from "../cityManager/cityConfigSlice";
+import {City} from "../../utils/types";
 
 export default function PlanView() {
     const cityList = useGetCityListQuery().data || []
+    const [startCity, setStartCity] = useState("");
+    const [endCity, setEndCity] = useState("");
+
     const cityItemList = cityList.map((city) => {
         return {
+            ...city,
             label: city.name
         }
     })
+
+    function disableOption(option: City) {
+        return option.name === startCity || option.name === endCity
+    }
+
     return (
         <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
             <h1>Route Plan</h1>
             <div>
-
                 <FormControl>
                     <FormLabel id="demo-radio-buttons-group-label">城市选择</FormLabel>
                     <Autocomplete
@@ -30,6 +39,10 @@ export default function PlanView() {
                         options={cityItemList}
                         sx={{width: 300}}
                         renderInput={(params) => <TextField {...params} label="起始城市"/>}
+                        onChange={(event, value) => {
+                            setStartCity(value ? value.label : "")
+                        }}
+                        getOptionDisabled={disableOption}
                     />
                     <div style={{height: 16}}></div>
                     <Autocomplete
@@ -37,6 +50,10 @@ export default function PlanView() {
                         options={cityItemList}
                         sx={{width: 300}}
                         renderInput={(params) => <TextField {...params} label="目标城市"/>}
+                        onChange={(event, value) => {
+                            setEndCity(value ? value.label : "")
+                        }}
+                        getOptionDisabled={disableOption}
                     />
                 </FormControl>
                 <div style={{height: 16}}></div>
