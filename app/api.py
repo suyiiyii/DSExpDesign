@@ -1,7 +1,10 @@
+from dataclasses import dataclass
+
 from fastapi import FastAPI
 from starlette.staticfiles import StaticFiles
 
 from models import City, Transport
+from route_planner import RoutePlanner, tm
 from store import db
 
 api = FastAPI(root_path="/api")
@@ -32,6 +35,18 @@ async def add_transport(transport: Transport):
 @api.get("/routeMap", response_model=dict[str, str])
 async def get_route_map():
     return {"data": db.route_map}
+
+
+@dataclass
+class RoutePlanReq:
+    strategy: str
+    start: str
+    end: str
+
+
+@api.post("/routePlan", response_model=list[Transport])
+async def get_route_plan(req: RoutePlanReq):
+    return RoutePlanner.plan(tm, req.start, req.end, req.strategy)
 
 
 api.mount("", app=StaticFiles(directory="app/static", html=True), name="static")

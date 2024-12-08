@@ -100,6 +100,16 @@ class Graph(ABC, Generic[T, U]):
         """根据from_node和to_node查找边，使用=运算法"""
         return self.get_edges_func(lambda x: x.value == value)
 
+    def get_node(self, value: T) -> Node:
+        """根据value查找节点，使用=运算法"""
+        nodes = list(self.get_nodes_func(lambda x: x.value == value))
+        return nodes[0] if nodes else None
+
+    def get_edge(self, value: U) -> Edge:
+        """根据from_node和to_node查找边，使用=运算法"""
+        edges = list(self.get_edges_func(lambda x: x.value == value))
+        return edges[0] if edges else None
+
     @abstractmethod
     def get_nodes_func(self, func: Callable[[T], bool]) -> Iterator[Node]:
         pass

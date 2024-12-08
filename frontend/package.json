@@ -16,6 +16,7 @@
     "@types/node": "^16.18.121",
     "@types/react": "^18.3.13",
     "@types/react-dom": "^18.3.1",
+    "axios": "^1.7.9",
     "frontend": "file:",
     "mermaid": "^11.4.1",
     "react": "^18.3.1",

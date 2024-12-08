@@ -11,12 +11,17 @@ import {
 import React, {useState} from "react";
 import {useGetCityListQuery} from "../cityManager/cityConfigSlice";
 import {City} from "../../utils/types";
+import {useAppDispatch, useAppSelector} from "../../app/hooks";
+import {planRoute} from "./routePlanSlice";
+import {TransportList} from "../transportManager/TransportView";
 
 export default function PlanView() {
     const cityList = useGetCityListQuery().data || []
     const [startCity, setStartCity] = useState("");
     const [endCity, setEndCity] = useState("");
-
+    const [strategy, setStrategy] = useState("fastest");
+    const dispatch = useAppDispatch();
+    const {routeData, loading} = useAppSelector(state => state.routePlan)
     const cityItemList = cityList.map((city) => {
         return {
             ...city,
@@ -26,6 +31,12 @@ export default function PlanView() {
 
     function disableOption(option: City) {
         return option.name === startCity || option.name === endCity
+    }
+
+    function handlePlan(start: string, end: string, strategy: string) {
+        console.log(start, end, strategy)
+        dispatch(planRoute({start, end, strategy}))
+
     }
 
     return (
@@ -62,16 +73,32 @@ export default function PlanView() {
                     <RadioGroup
                         row
                         aria-labelledby="demo-radio-buttons-group-label"
-                        defaultValue="female"
+                        value={strategy}
+                        onChange={(event) => {
+                            setStrategy(event.target.value)
+                        }}
                         name="radio-buttons-group"
                     >
-                        <FormControlLabel value="female" control={<Radio/>} label="最快"/>
-                        <FormControlLabel value="male" control={<Radio/>} label="最省钱"/>
-                        <FormControlLabel value="other" control={<Radio/>} label="最少中转"/>
+                        <FormControlLabel value="fastest" control={<Radio/>} label="最快"/>
+                        <FormControlLabel value="cheapest" control={<Radio/>} label="最省钱"/>
+                        <FormControlLabel value="leastTransfers" control={<Radio/>} label="最少中转"/>
                     </RadioGroup>
                 </FormControl>
                 <div style={{height: 16}}></div>
-                <Button style={{marginTop: 16}} variant="contained">开始规划</Button>
+                <Button style={{marginTop: 16}} variant="contained"
+                        onClick={() => {
+                            handlePlan(startCity, endCity, strategy)
+                        }}
+                        disabled={!startCity || !endCity}>开始规划</Button>
+            </div>
+            <div>
+                {loading && <div>loading...</div>}
+                {routeData && (
+                    <div>
+                        <h2>规划结果</h2>
+                        <TransportList transports={routeData}/>
+                    </div>
+                )}
             </div>
         </div>
     )
