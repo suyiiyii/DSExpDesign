@@ -4,6 +4,9 @@ import axios from "axios";
 export const planRoute = createAsyncThunk(
     'routePlan/planRoute',
     async ({start, end, strategy}: { start: string, end: string, strategy: string }) => {
+        if (!start || !end) {
+            throw new Error("start or end is empty");
+        }
         const response = await axios.post('/api/routePlan', {start, end, strategy});
         return response.data;
     }
@@ -16,7 +19,11 @@ const routePlanSlice = createSlice({
         loading: false,
         error: null as null | SerializedError
     },
-    reducers: {},
+    reducers: {
+        resetRouteData(state) {
+            state.routeData = null;
+        },
+    },
     extraReducers: builder => {
         builder.addCase(planRoute.pending, (state) => {
             state.loading = true;
@@ -32,3 +39,4 @@ const routePlanSlice = createSlice({
 })
 
 export default routePlanSlice.reducer
+export const {resetRouteData} = routePlanSlice.actions

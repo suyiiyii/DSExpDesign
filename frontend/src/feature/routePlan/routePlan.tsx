@@ -8,7 +8,7 @@ import {
     RadioGroup,
     TextField
 } from "@mui/material";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useGetCityListQuery} from "../cityManager/cityConfigSlice";
 import {City} from "../../utils/types";
 import {useAppDispatch, useAppSelector} from "../../app/hooks";
@@ -21,7 +21,7 @@ export default function PlanView() {
     const [endCity, setEndCity] = useState("");
     const [strategy, setStrategy] = useState("fastest");
     const dispatch = useAppDispatch();
-    const {routeData, loading} = useAppSelector(state => state.routePlan)
+    const {routeData, loading,error} = useAppSelector(state => state.routePlan)
     const cityItemList = cityList.map((city) => {
         return {
             ...city,
@@ -34,10 +34,12 @@ export default function PlanView() {
     }
 
     function handlePlan(start: string, end: string, strategy: string) {
-        console.log(start, end, strategy)
         dispatch(planRoute({start, end, strategy}))
-
     }
+
+    useEffect(() => {
+        handlePlan(startCity, endCity, strategy);
+    }, [startCity, endCity, strategy]);
 
     return (
         <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
@@ -93,6 +95,7 @@ export default function PlanView() {
             </div>
             <div>
                 {loading && <div>loading...</div>}
+                {error && <div>{error.message}</div>}
                 {routeData && (
                     <div>
                         <h2>规划结果</h2>
