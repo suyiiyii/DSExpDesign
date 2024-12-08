@@ -1,7 +1,8 @@
-import React from "react";
-import {Divider, IconButton, List, ListItem, ListItemText} from "@mui/material";
-import {useGetCityListQuery} from "./cityConfigSlice";
+import React, {useState} from "react";
+import {Divider, IconButton, List, ListItem, ListItemText, TextField} from "@mui/material";
+import {useAddCityMutation, useGetCityListQuery} from "./cityConfigSlice";
 import DeleteIcon from '@mui/icons-material/Delete';
+import {LoadingButton} from "@mui/lab";
 
 
 const style = {
@@ -16,6 +17,19 @@ const style = {
 
 function CityView() {
     const cityList = useGetCityListQuery().data || []
+    const [cityName, setCityName] = useState("");
+    const [addCity] = useAddCityMutation();
+    const [loading, setLoading] = useState(false);
+
+    function doAddCity(cityName: string) {
+        setLoading(true);
+        addCity(cityName).unwrap().then(() => {
+            setCityName("");
+        }).finally(() => {
+            setLoading(false);
+        })
+    }
+
     return (
         <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
             <h1>City View</h1>
@@ -37,6 +51,18 @@ function CityView() {
                     </React.Fragment>
                 ))}
             </List>
+            <div>
+                <h2>添加城市</h2>
+                <div style={{display: "flex", alignItems: "flex-end"}}>
+                    <TextField id="standard-basic" label="城市名称" variant="standard" value={cityName}
+                               onChange={(event) => {
+                                   setCityName(event.target.value)
+                               }}/>
+                    <LoadingButton variant="contained" style={{marginLeft: 8}} loading={loading} onClick={() => {
+                        doAddCity(cityName);
+                    }}>提交</LoadingButton>
+                </div>
+            </div>
         </div>
     );
 }
