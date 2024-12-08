@@ -1,8 +1,10 @@
 import React, {useState} from "react";
 import {Divider, IconButton, List, ListItem, ListItemText, TextField} from "@mui/material";
-import {useAddCityMutation, useGetCityListQuery} from "./cityConfigSlice";
+import {useAddCityMutation, useDeleteCityMutation, useGetCityListQuery} from "./cityConfigSlice";
 import DeleteIcon from '@mui/icons-material/Delete';
 import {LoadingButton} from "@mui/lab";
+import {enqueueSnackbar, SnackbarProvider} from "notistack";
+import {ResultStatus} from "../../utils/types";
 
 
 const style = {
@@ -19,6 +21,7 @@ function CityView() {
     const cityList = useGetCityListQuery().data || []
     const [cityName, setCityName] = useState("");
     const [addCity] = useAddCityMutation();
+    const [deleteCity] = useDeleteCityMutation();
     const [loading, setLoading] = useState(false);
 
     function doAddCity(cityName: string) {
@@ -30,15 +33,30 @@ function CityView() {
         })
     }
 
+    function doDeleteCity(cityName: string) {
+        deleteCity(cityName).unwrap().then((payload) => {
+                const value = payload as unknown as ResultStatus;
+                if (value.status === "error") {
+                    enqueueSnackbar("删除失败 " + value.msg, {variant: "error"});
+                    return;
+                }
+                enqueueSnackbar("删除成功 " + value.msg, {variant: "success"});
+            }
+        )
+    }
+
     return (
         <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+            <SnackbarProvider/>
             <h1>City View</h1>
             <List sx={style}>
                 {cityList.map((city, index) => (
                     <React.Fragment key={city.name}>
                         <ListItem
                             secondaryAction={
-                                <IconButton edge="end" aria-label="delete">
+                                <IconButton edge="end" aria-label="delete" onClick={() => {
+                                    doDeleteCity(city.name)
+                                }}>
                                     <DeleteIcon/>
                                 </IconButton>
                             }

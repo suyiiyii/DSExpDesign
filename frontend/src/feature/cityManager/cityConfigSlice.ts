@@ -20,8 +20,8 @@ export const cityConfigSlice = createApi({
         }),
         deleteCity: builder.mutation<void,string>({
             query: (city: string) => ({
-                url: '',
-                method: 'DELETE',
+                url: '/delete',
+                method: 'POST',
                 body: {name: city}
             }),
             invalidatesTags: ['CityConfig']

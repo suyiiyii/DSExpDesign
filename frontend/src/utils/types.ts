@@ -12,3 +12,8 @@ export interface Transport {
     end_time: string;
     run_id: string;
 }
+
+export interface ResultStatus {
+    status: string;
+    msg: string;
+}

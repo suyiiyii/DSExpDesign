@@ -5,6 +5,8 @@ from models import City, Transport
 DATA_CITY_PATH = "./data/city.json"
 DATA_TRANSPORT_PATH = "./data/transport.json"
 
+class ServiceException(Exception):
+    pass
 
 class Database:
 
@@ -60,6 +62,13 @@ class Database:
 
     def add_city(self, city: City):
         self._cities.append(city)
+        self._store()
+
+    def delete_city(self, city: City):
+        for transport in self._transports:
+            if transport.start == city.name or transport.end == city.name:
+                raise ServiceException("City is used in transport")
+        self._cities.remove(city)
         self._store()
 
     def add_transport(self, transport: Transport):

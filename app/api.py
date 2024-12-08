@@ -5,9 +5,15 @@ from starlette.staticfiles import StaticFiles
 
 from models import City, Transport
 from route_planner import RoutePlanner, tm
-from store import db
+from store import db, ServiceException
 
 api = FastAPI(root_path="/api")
+
+
+@dataclass
+class ResultStatus:
+    status: str
+    msg: str = ""
 
 
 @api.get("/city", response_model=list[City])
@@ -30,6 +36,15 @@ async def add_city(city: City):
 async def add_transport(transport: Transport):
     db.add_transport(transport)
     return transport
+
+
+@api.post("/city/delete", response_model=ResultStatus)
+async def delete_city(city: City):
+    try:
+        db.delete_city(city)
+    except ServiceException as e:
+        return ResultStatus(status="error", msg=str(e))
+    return ResultStatus(status="success", msg="delete success")
 
 
 @api.get("/routeMap", response_model=dict[str, str])
