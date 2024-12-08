@@ -13,7 +13,9 @@ import {useGetCityListQuery} from "../cityManager/cityConfigSlice";
 import {City} from "../../utils/types";
 import {useAppDispatch, useAppSelector} from "../../app/hooks";
 import {planRoute} from "./routePlanSlice";
-import {TransportList} from "../transportManager/TransportView";
+
+
+import {TransportList} from "../transportManager/TransportList";
 
 export default function PlanView() {
     const cityList = useGetCityListQuery().data || []
