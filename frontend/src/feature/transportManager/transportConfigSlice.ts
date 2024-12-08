@@ -21,8 +21,8 @@ export const transportConfigSlice = createApi({
         }),
         deleteTransport: builder.mutation<void,Transport>({
             query: (transport: Transport) => ({
-                url: '',
-                method: 'DELETE',
+                url: '/delete',
+                method: 'POST',
                 body: transport
             }),
             invalidatesTags: ['TransportConfig']

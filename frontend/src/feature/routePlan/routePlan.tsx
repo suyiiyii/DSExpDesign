@@ -1,13 +1,4 @@
-import {
-    Autocomplete,
-    Button,
-    FormControl,
-    FormControlLabel,
-    FormLabel,
-    Radio,
-    RadioGroup,
-    TextField
-} from "@mui/material";
+import {Button, FormControl, FormControlLabel, FormLabel, MenuItem, Radio, RadioGroup, TextField} from "@mui/material";
 import React, {useEffect, useState} from "react";
 import {useGetCityListQuery} from "../cityManager/cityConfigSlice";
 import {City} from "../../utils/types";
@@ -23,7 +14,7 @@ export default function PlanView() {
     const [endCity, setEndCity] = useState("");
     const [strategy, setStrategy] = useState("fastest");
     const dispatch = useAppDispatch();
-    const {routeData, loading,error} = useAppSelector(state => state.routePlan)
+    const {routeData, loading, error} = useAppSelector(state => state.routePlan)
     const cityItemList = cityList.map((city) => {
         return {
             ...city,
@@ -49,27 +40,35 @@ export default function PlanView() {
             <div>
                 <FormControl>
                     <FormLabel id="demo-radio-buttons-group-label">城市选择</FormLabel>
-                    <Autocomplete
-                        disablePortal
-                        options={cityItemList}
+                    <TextField
+                        select
+                        label="起始城市"
+                        value={startCity}
+                        onChange={(event) => setStartCity(event.target.value)}
                         sx={{width: 300}}
-                        renderInput={(params) => <TextField {...params} label="起始城市"/>}
-                        onChange={(event, value) => {
-                            setStartCity(value ? value.label : "")
-                        }}
-                        getOptionDisabled={disableOption}
-                    />
+                        required
+                    >
+                        {cityItemList.map((city) => (
+                            <MenuItem key={city.name} value={city.name} disabled={disableOption(city)}>
+                                {city.name}
+                            </MenuItem>
+                        ))}
+                    </TextField>
                     <div style={{height: 16}}></div>
-                    <Autocomplete
-                        disablePortal
-                        options={cityItemList}
+                    <TextField
+                        select
+                        label="目标城市"
+                        value={endCity}
+                        onChange={(event) => setEndCity(event.target.value)}
                         sx={{width: 300}}
-                        renderInput={(params) => <TextField {...params} label="目标城市"/>}
-                        onChange={(event, value) => {
-                            setEndCity(value ? value.label : "")
-                        }}
-                        getOptionDisabled={disableOption}
-                    />
+                        required
+                    >
+                        {cityItemList.map((city) => (
+                            <MenuItem key={city.name} value={city.name} disabled={disableOption(city)}>
+                                {city.name}
+                            </MenuItem>
+                        ))}
+                    </TextField>
                 </FormControl>
                 <div style={{height: 16}}></div>
                 <FormControl>

@@ -47,6 +47,11 @@ async def delete_city(city: City):
     return ResultStatus(status="success", msg="delete success")
 
 
+@api.post("/transport/delete", response_model=ResultStatus)
+async def delete_transport(transport: Transport):
+    db.delete_transport(transport)
+    return ResultStatus(status="success", msg="delete success")
+
 @api.get("/routeMap", response_model=dict[str, str])
 async def get_route_map():
     return {"data": db.route_map}

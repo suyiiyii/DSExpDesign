@@ -75,6 +75,10 @@ class Database:
         self._transports.append(transport)
         self._store()
 
+    def delete_transport(self, transport: Transport):
+        self._transports.remove(transport)
+        self._store()
+
 
 db = Database()
 

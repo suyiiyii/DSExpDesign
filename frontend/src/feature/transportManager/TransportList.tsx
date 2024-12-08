@@ -15,16 +15,22 @@ const style = {
     backgroundColor: 'background.paper',
 };
 
-export function TransportList({transports}: { transports: Transport[] }) {
+export function TransportList({transports, doDelete}: {
+    transports: Transport[],
+    doDelete?: (transport: Transport) => void
+}) {
     return (
         <List sx={style}>
             {transports.map((transport, index) => (
                 <React.Fragment key={JSON.stringify(transport)}>
                     <ListItem
                         secondaryAction={
-                            <IconButton edge="end" aria-label="delete">
-                                <DeleteIcon/>
-                            </IconButton>
+                            doDelete && (
+                                <IconButton edge="end" aria-label="delete" onClick={() => {
+                                    doDelete(transport)
+                                }}>
+                                    <DeleteIcon/>
+                                </IconButton>)
                         }
                     >
                         <ListItemIcon>
