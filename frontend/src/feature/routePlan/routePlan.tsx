@@ -8,6 +8,18 @@ import {planRoute} from "./routePlanSlice";
 
 import {TransportList} from "../transportManager/TransportList";
 
+function time2int(timestr: string): number {
+    /** Convert time string to integer */
+    const [h, m] = timestr.split(':').map(Number);
+    return h * 60 + m;
+}
+
+function int2time(minutes: number): string {
+    /** Convert integer to time string */
+    const h = Math.floor(minutes / 60);
+    const m = minutes % 60;
+    return `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}`;
+}
 export default function PlanView() {
     const cityList = useGetCityListQuery().data || []
     const [startCity, setStartCity] = useState("");
@@ -97,10 +109,13 @@ export default function PlanView() {
             <div>
                 {loading && <div>loading...</div>}
                 {error && <div>{error.message}</div>}
-                {routeData && (
+                {Boolean(routeData.length) && (
                     <div>
                         <h2>规划结果</h2>
                         <TransportList transports={routeData}/>
+                        <p>总耗时：<span>{int2time(time2int(routeData.slice(-1)[0].end_time) - time2int(routeData[0].start_time))}</span>
+                        </p>
+                        <p>总花费：<span>{routeData.reduce((p, c) => (p + c.price), 0)}</span></p>
                     </div>
                 )}
             </div>

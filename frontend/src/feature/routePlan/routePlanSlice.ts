@@ -1,5 +1,6 @@
 import {createAsyncThunk, createSlice, SerializedError} from "@reduxjs/toolkit";
 import axios from "axios";
+import {Transport} from "../../utils/types";
 
 export const planRoute = createAsyncThunk(
     'routePlan/planRoute',
@@ -15,13 +16,13 @@ export const planRoute = createAsyncThunk(
 const routePlanSlice = createSlice({
     name: 'routePlan',
     initialState: {
-        routeData: null,
+        routeData: [] as Transport[],
         loading: false,
         error: null as null | SerializedError
     },
     reducers: {
         resetRouteData(state) {
-            state.routeData = null;
+            state.routeData = [];
         },
     },
     extraReducers: builder => {
@@ -32,6 +33,7 @@ const routePlanSlice = createSlice({
             state.routeData = action.payload;
             state.loading = false;
         }).addCase(planRoute.rejected, (state, action) => {
+            state.routeData = [];
             state.loading = false;
             state.error = action.error;
         });
