@@ -115,7 +115,7 @@ export default function PlanView() {
                         <TransportList transports={routeData}/>
                         <p>总耗时：<span>{int2time(time2int(routeData.slice(-1)[0].end_time) - time2int(routeData[0].start_time))}</span>
                         </p>
-                        <p>总花费：<span>{routeData.reduce((p, c) => (p + c.price), 0)}</span></p>
+                        <p>总花费：<span>{routeData.reduce((p, c) => (p + c.price), 0)}￥</span></p>
                     </div>
                 )}
             </div>
