@@ -1,7 +1,8 @@
 import queue
+from collections import defaultdict
 
 from .base_struct.adjacency_list_graph import AdjacencyListGraph
-from .base_struct.graph import Graph
+from .base_struct.graph import Graph, Node, Edge
 from .models import City, Transport
 from .store import db
 
@@ -17,8 +18,8 @@ class TransportMap:
         self._data: Graph[str, Transport] = AdjacencyListGraph()
         for city in cities:
             self._data.add_node(city.name)
-        for transport in transports:
-            self._data.get_node(transport.start).add_edge(self._data.get_node(transport.end), transport)
+        for edge in transports:
+            self._data.get_node(edge.start).add_edge(self._data.get_node(edge.end), edge)
 
     def dump(self) -> (list[dict], list[Transport]):
         cities = map(lambda x: {"name": x.value}, self._data.get_nodes_func(lambda x: True))
@@ -52,6 +53,7 @@ class RoutePlanner:
     @staticmethod
     def cheapest(tm: TransportMap, start: str, end: str) -> list[Transport]:
         '''Dijkstra算法'''
+        # TODO： 未考虑时间
         start_node = tm.data.get_node(start)
         end_node = tm.data.get_node(end)
         pri_queue = queue.PriorityQueue()
@@ -73,14 +75,36 @@ class RoutePlanner:
         '''深搜，暴力搜索所有路径'''
         start_node = tm.data.get_node(start)
         end_node = tm.data.get_node(end)
-        paths = []
-        def dfs(node, path):
-            if node == end_node:
-                paths.append([edge.value for edge in path if isinstance(edge.value, Transport)])
+        paths: list[list[Transport]] = []
+
+        def dfs(node: Node, path: list[Transport]):
+            # TODO: 目前只会选择最早出发的交通工具，还需要支持选择尽量少换乘的工具
+            if node.value in map(lambda p: p.start, path):
                 return
+            if node == end_node:
+                paths.append(path)
+                return
+            # 按照 node 给 edge 分组
+            edges = defaultdict(list[Edge[Transport]])
+            to_nodes = set()
             for edge in node.edges:
-                if edge.to_node not in path:
-                    dfs(edge.to_node, path + [edge])
+                edges[edge.to_node].append(edge)
+                to_nodes.add(edge.to_node)
+            for to_node in to_nodes:
+                # 选择暂未出发，但是最近出发的交通工具
+                if path:
+                    available_transports = filter(
+                        lambda e: time2int(e.value.start_time) >= time2int(path[-1].end_time),
+                        edges[to_node])
+                else:
+                    available_transports = edges[to_node]
+                try:
+                    edge = min(available_transports, key=lambda e: time2int(e.value.start_time))
+                except ValueError:
+                    continue
+
+                dfs(to_node, path + [edge.value])
+                # for edge in edges[to_node]:
         dfs(start_node, [])
         return paths
 

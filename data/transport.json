@@ -1254,7 +1254,7 @@
     "name": "G1262",
     "start": "天津",
     "end": "哈尔滨",
-    "price": -496,
+    "price": 496,
     "start_time": "18:11",
     "end_time": "11:03",
     "run_id": "G1262"
