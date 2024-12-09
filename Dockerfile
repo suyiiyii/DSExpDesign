@@ -43,4 +43,4 @@ COPY --from=builder /usr/local/lib/python3.11/site-packages /usr/local/lib/pytho
 # 暴露应用的端口
 EXPOSE 8000
 # 启动应用
-CMD ["python", "./app/main.py"]
+CMD ["python", "-m", "app"]
