@@ -678,5 +678,545 @@
     "start_time": "18:24",
     "end_time": "07:52",
     "run_id": "Z180"
+  },
+  {
+    "type": "train",
+    "name": "G2929",
+    "start": "重庆",
+    "end": "广州",
+    "price": 502,
+    "start_time": "07:00",
+    "end_time": "13:31",
+    "run_id": "G2929"
+  },
+  {
+    "type": "train",
+    "name": "G2929",
+    "start": "广州",
+    "end": "深圳",
+    "price": 74,
+    "start_time": "13:35",
+    "end_time": "14:07",
+    "run_id": "G2929"
+  },
+  {
+    "type": "train",
+    "name": "G2965",
+    "start": "重庆",
+    "end": "广州",
+    "price": 502,
+    "start_time": "15:32",
+    "end_time": "21:24",
+    "run_id": "G2965"
+  },
+  {
+    "type": "train",
+    "name": "G2965",
+    "start": "广州",
+    "end": "深圳",
+    "price": 74,
+    "start_time": "21:27",
+    "end_time": "22:05",
+    "run_id": "G2965"
+  },
+  {
+    "type": "train",
+    "name": "G3727",
+    "start": "重庆",
+    "end": "广州",
+    "price": 502,
+    "start_time": "14:12",
+    "end_time": "20:37",
+    "run_id": "G3727"
+  },
+  {
+    "type": "train",
+    "name": "G6552",
+    "start": "香港",
+    "end": "深圳",
+    "price": 75,
+    "start_time": "08:06",
+    "end_time": "08:24",
+    "run_id": "G6552"
+  },
+  {
+    "type": "train",
+    "name": "G6552",
+    "start": "深圳",
+    "end": "广州",
+    "price": 140,
+    "start_time": "08:28",
+    "end_time": "09:43",
+    "run_id": "G6552"
+  },
+  {
+    "type": "train",
+    "name": "G5630",
+    "start": "香港",
+    "end": "深圳",
+    "price": 68,
+    "start_time": "10:49",
+    "end_time": "11:03",
+    "run_id": "G5630"
+  },
+  {
+    "type": "train",
+    "name": "G5644",
+    "start": "香港",
+    "end": "深圳",
+    "price": 75,
+    "start_time": "12:44",
+    "end_time": "13:02",
+    "run_id": "G5644"
+  },
+  {
+    "type": "train",
+    "name": "G6525",
+    "start": "广州",
+    "end": "深圳",
+    "price": 74,
+    "start_time": "13:55",
+    "end_time": "14:31",
+    "run_id": "G6525"
+  },
+  {
+    "type": "train",
+    "name": "G6525",
+    "start": "深圳",
+    "end": "香港",
+    "price": 140,
+    "start_time": "14:36",
+    "end_time": "14:55",
+    "run_id": "G6525"
+  },
+  {
+    "type": "train",
+    "name": "G335",
+    "start": "北京",
+    "end": "武汉",
+    "price": 623,
+    "start_time": "07:26",
+    "end_time": "13:13",
+    "run_id": "G335"
+  },
+  {
+    "type": "train",
+    "name": "G335",
+    "start": "武汉",
+    "end": "长沙",
+    "price": 155,
+    "start_time": "13:17",
+    "end_time": "14:42",
+    "run_id": "G335"
+  },
+  {
+    "type": "train",
+    "name": "G335",
+    "start": "长沙",
+    "end": "广州",
+    "price": 255,
+    "start_time": "14:57",
+    "end_time": "17:49",
+    "run_id": "G335"
+  },
+  {
+    "type": "train",
+    "name": "G335",
+    "start": "广州",
+    "end": "深圳",
+    "price": 74,
+    "start_time": "17:53",
+    "end_time": "18:22",
+    "run_id": "G335"
+  },
+  {
+    "type": "train",
+    "name": "G651",
+    "start": "北京",
+    "end": "西安",
+    "price": 573,
+    "start_time": "06:39",
+    "end_time": "12:20",
+    "run_id": "G651"
+  },
+  {
+    "type": "train",
+    "name": "G657",
+    "start": "北京",
+    "end": "西安",
+    "price": 577,
+    "start_time": "11:41",
+    "end_time": "16:59",
+    "run_id": "G657"
+  },
+  {
+    "type": "train",
+    "name": "G1083",
+    "start": "北京",
+    "end": "天津",
+    "price": 67,
+    "start_time": "06:43",
+    "end_time": "07:17",
+    "run_id": "G1083"
+  },
+  {
+    "type": "train",
+    "name": "G1083",
+    "start": "天津",
+    "end": "济南",
+    "price": 156,
+    "start_time": "07:20",
+    "end_time": "08:49",
+    "run_id": "G1083"
+  },
+  {
+    "type": "train",
+    "name": "G335",
+    "start": "北京",
+    "end": "武汉",
+    "price": 623,
+    "start_time": "07:26",
+    "end_time": "13:13",
+    "run_id": "G335"
+  },
+  {
+    "type": "train",
+    "name": "G335",
+    "start": "武汉",
+    "end": "长沙",
+    "price": 155,
+    "start_time": "13:17",
+    "end_time": "14:42",
+    "run_id": "G335"
+  },
+  {
+    "type": "train",
+    "name": "G335",
+    "start": "长沙",
+    "end": "广州",
+    "price": 255,
+    "start_time": "14:57",
+    "end_time": "17:49",
+    "run_id": "G335"
+  },
+  {
+    "type": "train",
+    "name": "G335",
+    "start": "广州",
+    "end": "深圳",
+    "price": 74,
+    "start_time": "17:53",
+    "end_time": "18:22",
+    "run_id": "G335"
+  },
+  {
+    "type": "train",
+    "name": "G79",
+    "start": "北京",
+    "end": "武汉",
+    "price": 623,
+    "start_time": "10:00",
+    "end_time": "13:55",
+    "run_id": "G79"
+  },
+  {
+    "type": "train",
+    "name": "G79",
+    "start": "武汉",
+    "end": "长沙",
+    "price": 155,
+    "start_time": "13:59",
+    "end_time": "15:10",
+    "run_id": "G79"
+  },
+  {
+    "type": "train",
+    "name": "G79",
+    "start": "长沙",
+    "end": "广州",
+    "price": 255,
+    "start_time": "15:13",
+    "end_time": "17:16",
+    "run_id": "G79"
+  },
+  {
+    "type": "train",
+    "name": "G79",
+    "start": "广州",
+    "end": "深圳",
+    "price": 74,
+    "start_time": "17:21",
+    "end_time": "17:50",
+    "run_id": "G79"
+  },
+  {
+    "type": "train",
+    "name": "G79",
+    "start": "深圳",
+    "end": "香港",
+    "price": 140,
+    "start_time": "17:54",
+    "end_time": "18:12",
+    "run_id": "G79"
+  },
+  {
+    "type": "train",
+    "name": "G81",
+    "start": "北京",
+    "end": "武汉",
+    "price": 623,
+    "start_time": "14:00",
+    "end_time": "18:11",
+    "run_id": "G81"
+  },
+  {
+    "type": "train",
+    "name": "G81",
+    "start": "武汉",
+    "end": "长沙",
+    "price": 155,
+    "start_time": "18:15",
+    "end_time": "19:26",
+    "run_id": "G81"
+  },
+  {
+    "type": "train",
+    "name": "G81",
+    "start": "长沙",
+    "end": "广州",
+    "price": 255,
+    "start_time": "19:29",
+    "end_time": "21:43",
+    "run_id": "G81"
+  },
+  {
+    "type": "train",
+    "name": "G81",
+    "start": "广州",
+    "end": "深圳",
+    "price": 74,
+    "start_time": "21:48",
+    "end_time": "22:24",
+    "run_id": "G81"
+  },
+  {
+    "type": "train",
+    "name": "G51",
+    "start": "北京",
+    "end": "重庆",
+    "price": 941,
+    "start_time": "06:55",
+    "end_time": "13:55",
+    "run_id": "G51"
+  },
+  {
+    "type": "train",
+    "name": "G371",
+    "start": "北京",
+    "end": "重庆",
+    "price": 941,
+    "start_time": "07:44",
+    "end_time": "17:19",
+    "run_id": "G371"
+  },
+  {
+    "type": "train",
+    "name": "G351",
+    "start": "北京",
+    "end": "重庆",
+    "price": 941,
+    "start_time": "11:10",
+    "end_time": "20:45",
+    "run_id": "G351"
+  },
+  {
+    "type": "train",
+    "name": "G53",
+    "start": "北京",
+    "end": "重庆",
+    "price": 941,
+    "start_time": "15:05",
+    "end_time": "21:57",
+    "run_id": "G53"
+  },
+  {
+    "type": "train",
+    "name": "G321",
+    "start": "北京",
+    "end": "天津",
+    "price": 67,
+    "start_time": "08:47",
+    "end_time": "09:21",
+    "run_id": "G321"
+  },
+  {
+    "type": "train",
+    "name": "G321",
+    "start": "天津",
+    "end": "济南",
+    "price": 156,
+    "start_time": "09:36",
+    "end_time": "10:42",
+    "run_id": "G321"
+  },
+  {
+    "type": "train",
+    "name": "G321",
+    "start": "济南",
+    "end": "厦门",
+    "price": 690,
+    "start_time": "10:47",
+    "end_time": "18:57",
+    "run_id": "G321"
+  },
+  {
+    "type": "train",
+    "name": "G323",
+    "start": "北京",
+    "end": "天津",
+    "price": 67,
+    "start_time": "10:10",
+    "end_time": "10:44",
+    "run_id": "G323"
+  },
+  {
+    "type": "train",
+    "name": "G323",
+    "start": "天津",
+    "end": "济南",
+    "price": 156,
+    "start_time": "10:46",
+    "end_time": "11:56",
+    "run_id": "G323"
+  },
+  {
+    "type": "train",
+    "name": "G323",
+    "start": "济南",
+    "end": "厦门",
+    "price": 721,
+    "start_time": "11:58",
+    "end_time": "21:38",
+    "run_id": "G323"
+  },
+  {
+    "type": "train",
+    "name": "G129",
+    "start": "北京",
+    "end": "天津",
+    "price": 67,
+    "start_time": "11:18",
+    "end_time": "11:52",
+    "run_id": "G129"
+  },
+  {
+    "type": "train",
+    "name": "G129",
+    "start": "天津",
+    "end": "济南",
+    "price": 156,
+    "start_time": "11:54",
+    "end_time": "13:05",
+    "run_id": "G129"
+  },
+  {
+    "type": "train",
+    "name": "G129",
+    "start": "济南",
+    "end": "上海",
+    "price": 439,
+    "start_time": "13:07",
+    "end_time": "17:38",
+    "run_id": "G129"
+  },
+  {
+    "type": "train",
+    "name": "G325",
+    "start": "北京",
+    "end": "天津",
+    "price": 61,
+    "start_time": "11:45",
+    "end_time": "12:38",
+    "run_id": "G325"
+  },
+  {
+    "type": "train",
+    "name": "G325",
+    "start": "天津",
+    "end": "济南",
+    "price": 156,
+    "start_time": "12:40",
+    "end_time": "13:50",
+    "run_id": "G325"
+  },
+  {
+    "type": "train",
+    "name": "G325",
+    "start": "济南",
+    "end": "厦门",
+    "price": 792,
+    "start_time": "13:53",
+    "end_time": "23:09",
+    "run_id": "G325"
+  },
+  {
+    "type": "train",
+    "name": "G11",
+    "start": "北京",
+    "end": "天津",
+    "price": 67,
+    "start_time": "12:00",
+    "end_time": "12:31",
+    "run_id": "G11"
+  },
+  {
+    "type": "train",
+    "name": "G11",
+    "start": "天津",
+    "end": "济南",
+    "price": 156,
+    "start_time": "12:33",
+    "end_time": "13:33",
+    "run_id": "G11"
+  },
+  {
+    "type": "train",
+    "name": "G11",
+    "start": "济南",
+    "end": "上海",
+    "price": 439,
+    "start_time": "13:35",
+    "end_time": "16:38",
+    "run_id": "G11"
+  },
+  {
+    "type": "train",
+    "name": "G8929",
+    "start": "北京",
+    "end": "天津",
+    "price": 54,
+    "start_time": "14:29",
+    "end_time": "15:01",
+    "run_id": "G8929"
+  },
+  {
+    "type": "train",
+    "name": "G1091",
+    "start": "北京",
+    "end": "天津",
+    "price": 67,
+    "start_time": "15:34",
+    "end_time": "16:08",
+    "run_id": "G1091"
+  },
+  {
+    "type": "train",
+    "name": "G1091",
+    "start": "天津",
+    "end": "济南",
+    "price": 156,
+    "start_time": "16:10",
+    "end_time": "17:28",
+    "run_id": "G1091"
   }
 ]
