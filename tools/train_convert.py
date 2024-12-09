@@ -88,6 +88,8 @@ def calc_result(train_name: str, datas: list[dict[str, str | int]]) -> list[Tran
         )
         result.append(transport)
         last_data = data
+    if result[-1].end =="":
+        del result[-1]
     return result
 
 
@@ -103,6 +105,9 @@ def to_dict(transport: Transport) -> dict:
         "run_id": transport.run_id
     }
 
+def add_data(transports: list[Transport]):
+    for transport in transports:
+        db.add_transport(transport)
 
 if __name__ == '__main__':
     # with open(SAMPLE_PATH, 'r', encoding="utf-8") as f:
@@ -110,7 +115,7 @@ if __name__ == '__main__':
     #     datas = parse_data(data)
     # print(station_name_dict)
     # print(datas)
-    train_name = input("请输入车次:")
+    train_name = input("请输入车次:").strip()
     raw_data = ""
     raw_data += input("请输入数据:")
     while True:
@@ -120,3 +125,4 @@ if __name__ == '__main__':
         raw_data += '\n' + line
     datas = parse_data(raw_data)
     print(json.dumps(list(map(to_dict, calc_result(train_name, datas))), ensure_ascii=False, indent=2))
+    add_data(calc_result(train_name, datas))
