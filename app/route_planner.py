@@ -1,9 +1,9 @@
 import queue
 
-from base_struct.adjacency_list_graph import AdjacencyListGraph
-from base_struct.graph import Graph
-from models import City, Transport
-from store import db
+from .base_struct.adjacency_list_graph import AdjacencyListGraph
+from .base_struct.graph import Graph
+from .models import City, Transport
+from .store import db
 
 
 class TransportMap:
@@ -61,6 +61,22 @@ class RoutePlanner:
             for edge in node.edges:
                 pri_queue.put((distance + edge.value.price, edge.to_node, path + [edge]))
         return []
+
+    @staticmethod
+    def get_all_paths(tm: TransportMap, start: str, end: str) -> list[list[Transport]]:
+        '''深搜，暴力搜索所有路径'''
+        start_node = tm.data.get_node(start)
+        end_node = tm.data.get_node(end)
+        paths = []
+        def dfs(node, path):
+            if node == end_node:
+                paths.append([edge.value for edge in path if isinstance(edge.value, Transport)])
+                return
+            for edge in node.edges:
+                if edge.to_node not in path:
+                    dfs(edge.to_node, path + [edge])
+        dfs(start_node, [])
+        return paths
 
 
 

@@ -3,9 +3,9 @@ from dataclasses import dataclass
 from fastapi import FastAPI
 from starlette.staticfiles import StaticFiles
 
-from models import City, Transport
-from route_planner import RoutePlanner, tm
-from store import db, ServiceException
+from .models import City, Transport
+from .route_planner import RoutePlanner, tm
+from .store import db, ServiceException
 
 api = FastAPI(root_path="/api")
 

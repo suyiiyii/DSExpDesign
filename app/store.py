@@ -1,6 +1,6 @@
 import json
 
-from models import City, Transport
+from .models import City, Transport
 
 DATA_CITY_PATH = "./data/city.json"
 DATA_TRANSPORT_PATH = "./data/transport.json"
