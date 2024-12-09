@@ -29,6 +29,8 @@ class AdjacencyListEdge(Edge[U]):
     def destroy(self):
         self._from_node._remove_edge(self)
 
+    def __lt__(self, other):
+        return id(self) < id(other)
 
 class AdjacencyListNode(Node[T]):
 
@@ -70,6 +72,9 @@ class AdjacencyListNode(Node[T]):
             edge.destroy()
         # 删除当前节点
         self._graph._nodes.remove(self)
+
+    def __lt__(self, other):
+        return id(self) < id(other)
 
 
 class AdjacencyListGraph(Graph):

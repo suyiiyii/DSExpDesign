@@ -1,3 +1,5 @@
+import queue
+
 from base_struct.adjacency_list_graph import AdjacencyListGraph
 from base_struct.graph import Graph
 from models import City, Transport
@@ -28,12 +30,38 @@ class TransportMap:
         return self._data
 
 
+def compare_first_element(item):
+    return item[0]
+
 class RoutePlanner:
     """静态类，路径规划的具体实现"""
 
     @staticmethod
     def plan(tm: TransportMap, start: str, end: str, strategy: str) -> list[Transport]:
-        return tm.dump()[1]
+        if strategy == "cheapest":
+            return RoutePlanner.cheapest(tm, start, end)
+        else:
+            raise ValueError("Unknown strategy")
+
+    @staticmethod
+    def cheapest(tm: TransportMap, start: str, end: str) -> list[Transport]:
+        '''Dijkstra算法'''
+        start_node = tm.data.get_node(start)
+        end_node = tm.data.get_node(end)
+        pri_queue = queue.PriorityQueue()
+        pri_queue.put((0, start_node, [start_node]))
+        visited = set()
+        while not pri_queue.empty():
+            distance, node, path = pri_queue.get()
+            if node in visited:
+                continue
+            visited.add(node)
+            if node == end_node:
+                return [edge.value for edge in path if isinstance(edge.value, Transport)]
+            for edge in node.edges:
+                pri_queue.put((distance + edge.value.price, edge.to_node, path + [edge]))
+        return []
+
 
 
 tm = TransportMap(db.cities, db.transports)
