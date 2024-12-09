@@ -39,7 +39,7 @@ export function TransportList({transports, doDelete}: {
                         <div>
                             <ListItemText primary={`${transport.start} --${transport.name}-> ${transport.end}`}/>
                             <p>
-                                {`${transport.start_time} - ${transport.end_time}`}
+                                {`${transport.start_time} - ${transport.end_time}  ${transport.price}￥`}
                             </p>
                         </div>
                     </ListItem>
