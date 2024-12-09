@@ -30,8 +30,10 @@ class TransportMap:
         return self._data
 
 
-def compare_first_element(item):
-    return item[0]
+def time2int(timestr: str) -> int:
+    '''将时间字符串转换为整数'''
+    h, m = map(int, timestr.split(':'))
+    return h * 60 + m
 
 class RoutePlanner:
     """静态类，路径规划的具体实现"""
@@ -40,6 +42,10 @@ class RoutePlanner:
     def plan(tm: TransportMap, start: str, end: str, strategy: str) -> list[Transport]:
         if strategy == "cheapest":
             return RoutePlanner.cheapest(tm, start, end)
+        elif strategy == "fastest":
+            return RoutePlanner.fastest(tm, start, end)
+        elif strategy == "leastTransfers":
+            return RoutePlanner.transfer_count_least(tm, start, end)
         else:
             raise ValueError("Unknown strategy")
 
@@ -77,6 +83,36 @@ class RoutePlanner:
                     dfs(edge.to_node, path + [edge])
         dfs(start_node, [])
         return paths
+
+    @staticmethod
+    def time_reasonable(path: list[Transport]) -> bool:
+        '''判断路径是否合理'''
+        for i in range(len(path) - 1):
+            if time2int(path[i].end_time) > time2int(path[i + 1].start_time):
+                return False
+        return True
+
+    @staticmethod
+    def calc_transfer_count(path: list[Transport]) -> int:
+        '''计算换乘次数'''
+        st = set()
+        for t in path:
+            st.add(t.run_id)
+        return len(st)
+
+    @staticmethod
+    def fastest(tm: TransportMap, start: str, end: str) -> list[Transport]:
+        '''深搜，暴力搜索所有路径，返回耗时最短的路径'''
+        paths = RoutePlanner.get_all_paths(tm, start, end)
+        paths = filter(RoutePlanner.time_reasonable, paths)
+        return min(paths, key=lambda ts: (time2int(ts[-1].end_time) - time2int(ts[0].start_time)))
+
+    @staticmethod
+    def transfer_count_least(tm: TransportMap, start: str, end: str) -> list[Transport]:
+        '''深搜，暴力搜索所有路径，返回换乘次数最少的路径'''
+        paths = RoutePlanner.get_all_paths(tm, start, end)
+        paths = filter(RoutePlanner.time_reasonable, paths)
+        return min(paths, key=RoutePlanner.calc_transfer_count)
 
 
 

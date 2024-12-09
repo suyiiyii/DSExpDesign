@@ -1,9 +1,13 @@
 import json
+import os
+from pathlib import Path
 
 from .models import City, Transport
 
-DATA_CITY_PATH = "./data/city.json"
-DATA_TRANSPORT_PATH = "./data/transport.json"
+BASE_DIR = Path(os.path.dirname(os.path.abspath(__file__)))
+DATA_CITY_PATH = BASE_DIR.parent / "data" / "city.json"
+DATA_TRANSPORT_PATH = BASE_DIR.parent / "data" / "transport.json"
+GRAPH_PATH = BASE_DIR.parent / "graph.md"
 
 class ServiceException(Exception):
     pass
@@ -37,9 +41,8 @@ class Database:
         graph += "```mermaid\n"
         graph += self._generate_graph()
         graph += "```"
-        with open("../graph.md", "w", encoding="utf-8") as f:
+        with open(GRAPH_PATH, "w", encoding="utf-8") as f:
             f.write(graph)
-
 
     def _load(self) -> (list[City], list[Transport]):
         with open(DATA_CITY_PATH, "r", encoding="utf-8") as f:
