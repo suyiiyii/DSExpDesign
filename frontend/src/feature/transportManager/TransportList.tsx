@@ -36,7 +36,12 @@ export function TransportList({transports, doDelete}: {
                         <ListItemIcon>
                             {transport.type === 'train' ? <TrainIcon/> : <FlightIcon/>}
                         </ListItemIcon>
-                        <ListItemText primary={`${transport.start} --${transport.name}-> ${transport.end}`}/>
+                        <div>
+                            <ListItemText primary={`${transport.start} --${transport.name}-> ${transport.end}`}/>
+                            <p>
+                                {`${transport.start_time} - ${transport.end_time}`}
+                            </p>
+                        </div>
                     </ListItem>
                     {index !== transports.length - 1 && (
                         <Divider component="li"/>
