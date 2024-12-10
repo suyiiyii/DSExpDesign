@@ -1,0 +1,22 @@
+[
+    {
+      "type": "flight",
+      "name": "CX979",
+      "start": "厦门",
+      "end": "香港",
+      "price": 845,
+      "start_time": "20:35",
+      "end_time": "22:20",
+      "run_id": "CX979"
+    },
+    {
+      "type": "flight",
+      "name": "CX977",
+      "start": "厦门",
+      "end": "香港",
+      "price": 995,
+      "start_time": "12:15",
+      "end_time": "14:00",
+      "run_id": "CX977"
+    }
+  ]
