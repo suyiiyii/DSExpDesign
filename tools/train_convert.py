@@ -180,7 +180,7 @@ def download_train_data(train_name: str) -> list[list[str]]:
 
 
 def download_and_save_train_data(train_name: str):
-    if done_store.check(train_name):
+    if done_store.check(train_name) or check_if_exists(train_name):
         print(f"车次 {train_name} 已经存在，跳过获取")
         return
     print(f"开始获取车次 {train_name} 的数据")
@@ -191,11 +191,13 @@ def download_and_save_train_data(train_name: str):
     from time import sleep
     print(f"车次 {train_name} 的数据获取完成，成功获取 {len(transports)} 条数据，等待5秒")
     done_store.add(train_name)
-    sleep(5)
+    sleep(10)
 
 
 if __name__ == '__main__':
     with open(TRAIN_NAME_PATH, 'r', encoding="utf-8") as f:
         for line in f:
             if line.strip():
+                if "#" in line:
+                    continue
                 download_and_save_train_data(line.strip())
