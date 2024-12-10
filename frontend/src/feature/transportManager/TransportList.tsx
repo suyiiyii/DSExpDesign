@@ -22,10 +22,12 @@ export function TransportList({transports, doDelete}: {
 }) {
 
     function row(props: ListChildComponentProps) {
-        const {index} = props;
+        const {index, style} = props;
         const transport = transports[index];
         return (
             <React.Fragment key={JSON.stringify(transport)}>
+                <div style={style}>
+
                 <ListItem
                     secondaryAction={
                         doDelete && (
@@ -46,9 +48,10 @@ export function TransportList({transports, doDelete}: {
                         </p>
                     </div>
                 </ListItem>
-                {index !== transports.length - 1 && (
-                    <Divider component="li"/>
-                )}
+                    {index !== transports.length - 1 && (
+                        <Divider component="li"/>
+                    )}
+                </div>
             </React.Fragment>
         );
     }
@@ -59,7 +62,7 @@ export function TransportList({transports, doDelete}: {
                 itemSize={100}
                 height={400}
                 itemCount={transports.length}
-                width={360}
+                width={380}
                 overscanCount={5}>
                 {row}
             </FixedSizeList>
