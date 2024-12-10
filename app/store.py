@@ -82,9 +82,15 @@ class Database:
         self._transports.remove(transport)
         self._store()
 
+    def check(self):
+        cities = [city.name for city in self._cities]
+        for transport in self._transports:
+            if transport.start not in cities or transport.end not in cities:
+                raise ServiceException("City not found" + transport.start +" "+ transport.end)
+
 
 db = Database()
-
+db.check()
 if __name__ == '__main__':
     print(db.cities)
     print(db.transports)
