@@ -1,9 +1,13 @@
 import json
 from pathlib import Path
 
+import httpx
+
 BASE_DIR = Path(__file__).resolve().parent
-TRAIN_NAME_PATH = BASE_DIR / 'station_name.txt'
+STATION_NAME_PATH = BASE_DIR / 'station_name.txt'
 SAMPLE_PATH = BASE_DIR / 'sample.txt'
+TRAIN_NAME_PATH = BASE_DIR / 'train_name.txt'
+DONE_STORE_PATH = BASE_DIR / 'done.json'
 
 station_name_dict = {}
 
@@ -22,12 +26,12 @@ def parse_line(line: str):
     station_name_dict[splits[1]] = splits[-1]
 
 
-with open(TRAIN_NAME_PATH, 'r', encoding="utf-8") as f:
+with open(STATION_NAME_PATH, 'r', encoding="utf-8") as f:
     for line in f:
         parse_line(line)
 
 
-def parse_data(data: str):
+def parse_copy_data(data: str) -> list[dict[str, str | float]]:
     """解析从网站上面复制下来的车站数据 来源网站：https://shike.gaotie.cn/checi.asp?checi=G305"""
 
     def parse_data_line(line: str) -> dict[str, str | float]:
@@ -42,17 +46,41 @@ def parse_data(data: str):
         try:
             data['price'] = float(splits[8].split('/')[0].strip())
         except ValueError:
-            data['price'] = 0
+            data['price'] = 0.0
         return data
 
     datas = []
-    for line in data.split('\n'):
+    for line in data.strip().split('\n'):
         data = parse_data_line(line)
         if data:
             datas.append(data)
     return datas
 
 
+class DoneStore:
+
+
+    def __init__(self):
+        self._data: list[str] = []
+        self._load()
+
+    def _load(self):
+        with open(DONE_STORE_PATH, 'r', encoding='utf-8') as f:
+            self._data = json.loads(f.read())
+
+    def _store(self):
+        with open(DONE_STORE_PATH, 'w', encoding='utf-8') as f:
+            f.write(json.dumps(self._data))
+
+    def add(self, train_name: str):
+        self._data.append(train_name)
+        self._store()
+
+    def check(self, train_name: str):
+        return train_name in self._data
+
+
+done_store = DoneStore()
 def calc_result(train_name: str, datas: list[dict[str, str | int]]) -> list[Transport]:
     """计算车站之间的数据，得到可用的结果"""
     result: list[Transport] = []
@@ -88,7 +116,7 @@ def calc_result(train_name: str, datas: list[dict[str, str | int]]) -> list[Tran
         )
         result.append(transport)
         last_data = data
-    if result[-1].end =="":
+    if result and result[-1].end == "":
         del result[-1]
     return result
 
@@ -105,24 +133,69 @@ def to_dict(transport: Transport) -> dict:
         "run_id": transport.run_id
     }
 
+
+def check_if_exists(train_name) -> bool:
+    for t in db.transports:
+        if t.run_id == train_name:
+            return True
+
 def add_data(transports: list[Transport]):
     for transport in transports:
         db.add_transport(transport)
 
+
+def parse_table_data(rows: list[list[str]]) -> list[dict[str, str | float]]:
+    """解析表格数据"""
+    datas = []
+    for row in rows:
+        data = {}
+        data['start_station'] = row[1].strip()
+        data['arrive_time'] = row[2].strip()
+        data['start_time'] = row[4].strip()
+        try:
+            data['price'] = float(row[8].split('/')[0].strip())
+        except ValueError:
+            data['price'] = 0.0
+        datas.append(data)
+    return datas
+
+
+def download_train_data(train_name: str) -> list[list[str]]:
+    from bs4 import BeautifulSoup
+    url = f"https://shike.gaotie.cn/checi.asp?checi={train_name.strip()}"
+    response = httpx.get(url)
+    if response.status_code != 200:
+        raise RuntimeError(f"请求失败，状态码：{response.status_code}")
+
+    soup = BeautifulSoup(response.text, 'lxml')
+    table = soup.select_one('body > div:nth-child(2) > table:nth-child(5)')
+
+    # Extract rows
+    rows = []
+    for row in table.find_all('tr')[1:]:  # Skip the header row
+        cells = row.find_all('td')
+        rows.append([cell.text for cell in cells])
+
+    return rows
+
+
+def download_and_save_train_data(train_name: str):
+    if done_store.check(train_name):
+        print(f"车次 {train_name} 已经存在，跳过获取")
+        return
+    print(f"开始获取车次 {train_name} 的数据")
+    rows = download_train_data(train_name)
+    datas = parse_table_data(rows)
+    transports = calc_result(train_name, datas)
+    add_data(transports)
+    from time import sleep
+    print(f"车次 {train_name} 的数据获取完成，成功获取 {len(transports)} 条数据，等待5秒")
+    done_store.add(train_name)
+    sleep(5)
+
+
 if __name__ == '__main__':
-    # with open(SAMPLE_PATH, 'r', encoding="utf-8") as f:
-    #     data = f.read()
-    #     datas = parse_data(data)
-    # print(station_name_dict)
-    # print(datas)
-    train_name = input("请输入车次:").strip()
-    raw_data = ""
-    raw_data += input("请输入数据:")
-    while True:
-        line = input()
-        if not line:
-            break
-        raw_data += '\n' + line
-    datas = parse_data(raw_data)
-    print(json.dumps(list(map(to_dict, calc_result(train_name, datas))), ensure_ascii=False, indent=2))
-    add_data(calc_result(train_name, datas))
+    with open(TRAIN_NAME_PATH, 'r', encoding="utf-8") as f:
+        for line in f:
+            if line.strip():
+                download_and_save_train_data(line.strip())
