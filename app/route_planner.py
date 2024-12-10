@@ -141,4 +141,3 @@ class RoutePlanner:
 
 
 tm = TransportMap(db.cities, db.transports)
-print(tm.dump())
