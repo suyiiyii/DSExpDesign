@@ -9,6 +9,9 @@ SAMPLE_PATH = BASE_DIR / 'sample.txt'
 TRAIN_NAME_PATH = BASE_DIR / 'train_name.txt'
 DONE_STORE_PATH = BASE_DIR / 'done.json'
 
+
+import sys
+sys.path.append(str(BASE_DIR.parent))
 station_name_dict = {}
 
 from app.store import db
@@ -49,12 +52,12 @@ def parse_copy_data(data: str) -> list[dict[str, str | float]]:
             data['price'] = 0.0
         return data
 
-    datas = []
+    parsed_train_info = []
     for line in data.strip().split('\n'):
-        data = parse_data_line(line)
-        if data:
-            datas.append(data)
-    return datas
+        train_info = parse_data_line(line)
+        if train_info:
+            parsed_train_info.append(train_info)
+    return parsed_train_info
 
 
 class DoneStore:
@@ -189,9 +192,10 @@ def download_and_save_train_data(train_name: str):
     transports = calc_result(train_name, datas)
     add_data(transports)
     from time import sleep
-    print(f"车次 {train_name} 的数据获取完成，成功获取 {len(transports)} 条数据，等待5秒")
+    sleep_time = 10
+    print(f"车次 {train_name} 的数据获取完成，成功获取 {len(transports)} 条数据，等待 {sleep_time} 秒")
     done_store.add(train_name)
-    sleep(10)
+    sleep(sleep_time)
 
 
 if __name__ == '__main__':
