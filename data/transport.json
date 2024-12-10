@@ -84,7 +84,7 @@
     "name": "K1231",
     "start": "广州",
     "end": "深圳",
-    "price": 0,
+    "price": 30,
     "start_time": "06:12",
     "end_time": "08:30",
     "run_id": "K1231"
@@ -2044,7 +2044,7 @@
     "name": "K1232",
     "start": "深圳",
     "end": "广州",
-    "price": 0,
+    "price": 30,
     "start_time": "19:16",
     "end_time": "21:03",
     "run_id": "K1232"
@@ -4454,7 +4454,7 @@
     "name": "G9632",
     "start": "广州",
     "end": "深圳",
-    "price": 0,
+    "price": 30,
     "start_time": "00:25",
     "end_time": "00:54",
     "run_id": "G9632"
@@ -6974,7 +6974,7 @@
     "name": "G9622",
     "start": "深圳",
     "end": "广州",
-    "price": 0,
+    "price": 30,
     "start_time": "02:03",
     "end_time": "02:32",
     "run_id": "G9622"
@@ -11494,7 +11494,7 @@
     "name": "G9705",
     "start": "广州",
     "end": "深圳",
-    "price": 0,
+    "price": 30,
     "start_time": "01:10",
     "end_time": "01:39",
     "run_id": "G9705"
@@ -11594,7 +11594,7 @@
     "name": "G9706",
     "start": "广州",
     "end": "长沙",
-    "price": -74,
+    "price": 74,
     "start_time": "02:30",
     "end_time": "04:51",
     "run_id": "G9706"
@@ -11634,7 +11634,7 @@
     "name": "G9708",
     "start": "广州",
     "end": "长沙",
-    "price": -74,
+    "price": 74,
     "start_time": "00:17",
     "end_time": "02:37",
     "run_id": "G9708"
@@ -11644,7 +11644,7 @@
     "name": "G9535",
     "start": "广州",
     "end": "深圳",
-    "price": 0,
+    "price": 30,
     "start_time": "23:05",
     "end_time": "23:36",
     "run_id": "G9535"
@@ -11684,7 +11684,7 @@
     "name": "G9719",
     "start": "长沙",
     "end": "广州",
-    "price": 0,
+    "price": 125,
     "start_time": "00:15",
     "end_time": "02:36",
     "run_id": "G9719"
@@ -12114,7 +12114,7 @@
     "name": "G5865",
     "start": "香港",
     "end": "深圳",
-    "price": 0,
+    "price": 68,
     "start_time": "21:34",
     "end_time": "21:48",
     "run_id": "G5865"
@@ -13894,7 +13894,7 @@
     "name": "Z6",
     "start": "长沙",
     "end": "武汉",
-    "price": 0,
+    "price": 66,
     "start_time": "19:32",
     "end_time": "22:54",
     "run_id": "Z6"
@@ -13904,7 +13904,7 @@
     "name": "Z6",
     "start": "武汉",
     "end": "北京",
-    "price": 0,
+    "price": 261,
     "start_time": "23:00",
     "end_time": "09:59",
     "run_id": "Z6"
@@ -14824,7 +14824,7 @@
     "name": "Z5",
     "start": "北京",
     "end": "武汉",
-    "price": 0,
+    "price": 261,
     "start_time": "16:05",
     "end_time": "02:50",
     "run_id": "Z5"
@@ -14834,7 +14834,7 @@
     "name": "Z5",
     "start": "武汉",
     "end": "长沙",
-    "price": 0,
+    "price": 53,
     "start_time": "02:56",
     "end_time": "06:13",
     "run_id": "Z5"
@@ -19794,7 +19794,7 @@
     "name": "G116",
     "start": "天津",
     "end": "北京",
-    "price": -33,
+    "price": 33,
     "start_time": "14:41",
     "end_time": "15:22",
     "run_id": "G116"
@@ -19884,7 +19884,7 @@
     "name": "C2113",
     "start": "北京",
     "end": "天津",
-    "price": 0,
+    "price": 44,
     "start_time": "15:37",
     "end_time": "16:14",
     "run_id": "C2113"
@@ -20204,7 +20204,7 @@
     "name": "C2249",
     "start": "北京",
     "end": "天津",
-    "price": 0,
+    "price": 54,
     "start_time": "16:19",
     "end_time": "16:54",
     "run_id": "C2249"
@@ -20724,7 +20724,7 @@
     "name": "C2255",
     "start": "北京",
     "end": "天津",
-    "price": 0,
+    "price": 54,
     "start_time": "17:35",
     "end_time": "18:01",
     "run_id": "C2255"
@@ -21604,7 +21604,7 @@
     "name": "G20",
     "start": "天津",
     "end": "北京",
-    "price": -33,
+    "price": 33,
     "start_time": "19:03",
     "end_time": "19:36",
     "run_id": "G20"
@@ -21704,7 +21704,7 @@
     "name": "C2260",
     "start": "天津",
     "end": "北京",
-    "price": 0,
+    "price": 54,
     "start_time": "19:17",
     "end_time": "19:52",
     "run_id": "C2260"
@@ -22034,7 +22034,7 @@
     "name": "G144",
     "start": "天津",
     "end": "北京",
-    "price": -33,
+    "price": 33,
     "start_time": "20:09",
     "end_time": "20:45",
     "run_id": "G144"
@@ -22304,7 +22304,7 @@
     "name": "D11",
     "start": "北京",
     "end": "天津",
-    "price": 0,
+    "price": 54,
     "start_time": "21:22",
     "end_time": "22:30",
     "run_id": "D11"
@@ -23144,7 +23144,7 @@
     "name": "Z204",
     "start": "哈尔滨",
     "end": "北京",
-    "price": 0,
+    "price": 156,
     "start_time": "19:40",
     "end_time": "06:36",
     "run_id": "Z204"
@@ -23224,7 +23224,7 @@
     "name": "Z16",
     "start": "哈尔滨",
     "end": "北京",
-    "price": 0,
+    "price": 156,
     "start_time": "21:15",
     "end_time": "07:29",
     "run_id": "Z16"
@@ -23234,7 +23234,7 @@
     "name": "Z18",
     "start": "哈尔滨",
     "end": "北京",
-    "price": 0,
+    "price": 156,
     "start_time": "21:21",
     "end_time": "07:49",
     "run_id": "Z18"
@@ -23244,7 +23244,7 @@
     "name": "Z84",
     "start": "哈尔滨",
     "end": "北京",
-    "price": 0,
+    "price": 156,
     "start_time": "21:37",
     "end_time": "08:04",
     "run_id": "Z84"
@@ -23264,7 +23264,7 @@
     "name": "Z68",
     "start": "哈尔滨",
     "end": "北京",
-    "price": 0,
+    "price": 156,
     "start_time": "20:08",
     "end_time": "08:39",
     "run_id": "Z68"
@@ -23284,7 +23284,7 @@
     "name": "T48",
     "start": "哈尔滨",
     "end": "北京",
-    "price": 0,
+    "price": 156,
     "start_time": "21:59",
     "end_time": "09:25",
     "run_id": "T48"
@@ -23634,7 +23634,7 @@
     "name": "Z83",
     "start": "北京",
     "end": "哈尔滨",
-    "price": 0,
+    "price": 156,
     "start_time": "18:16",
     "end_time": "05:34",
     "run_id": "Z83"
@@ -23674,7 +23674,7 @@
     "name": "T47",
     "start": "北京",
     "end": "哈尔滨",
-    "price": 0,
+    "price": 156,
     "start_time": "18:58",
     "end_time": "06:45",
     "run_id": "T47"
@@ -23724,7 +23724,7 @@
     "name": "Z203",
     "start": "北京",
     "end": "哈尔滨",
-    "price": 0,
+    "price": 156,
     "start_time": "20:36",
     "end_time": "07:01",
     "run_id": "Z203"
@@ -23744,7 +23744,7 @@
     "name": "Z67",
     "start": "北京",
     "end": "哈尔滨",
-    "price": 0,
+    "price": 156,
     "start_time": "20:56",
     "end_time": "09:20",
     "run_id": "Z67"
@@ -23754,7 +23754,7 @@
     "name": "Z15",
     "start": "北京",
     "end": "哈尔滨",
-    "price": 0,
+    "price": 156,
     "start_time": "21:18",
     "end_time": "07:38",
     "run_id": "Z15"
@@ -24054,7 +24054,7 @@
     "name": "K1276",
     "start": "济南",
     "end": "天津",
-    "price": -177,
+    "price": 177,
     "start_time": "23:45",
     "end_time": "06:48",
     "run_id": "K1276"
@@ -25484,7 +25484,7 @@
     "name": "K4293",
     "start": "哈尔滨",
     "end": "天津",
-    "price": 0,
+    "price": 156,
     "start_time": "10:31",
     "end_time": "04:09",
     "run_id": "K4293"
@@ -25494,7 +25494,7 @@
     "name": "K4293",
     "start": "天津",
     "end": "上海",
-    "price": 0,
+    "price": 163.5,
     "start_time": "04:15",
     "end_time": "00:49",
     "run_id": "K4293"
@@ -25504,7 +25504,7 @@
     "name": "K2550",
     "start": "天津",
     "end": "北京",
-    "price": 0,
+    "price": 21.5,
     "start_time": "04:47",
     "end_time": "06:11",
     "run_id": "K2550"
@@ -26214,7 +26214,7 @@
     "name": "K2549",
     "start": "北京",
     "end": "天津",
-    "price": 0,
+    "price": 21.5,
     "start_time": "17:30",
     "end_time": "21:02",
     "run_id": "K2549"
@@ -26244,7 +26244,7 @@
     "name": "K4294",
     "start": "天津",
     "end": "哈尔滨",
-    "price": 0,
+    "price": 152.5,
     "start_time": "21:24",
     "end_time": "16:55",
     "run_id": "K4294"
@@ -27114,7 +27114,7 @@
     "name": "Z256",
     "start": "上海",
     "end": "杭州",
-    "price": 0,
+    "price": 74,
     "start_time": "19:39",
     "end_time": "21:31",
     "run_id": "Z256"
@@ -27124,7 +27124,7 @@
     "name": "Z256",
     "start": "杭州",
     "end": "武汉",
-    "price": 0,
+    "price": 194,
     "start_time": "21:37",
     "end_time": "04:49",
     "run_id": "Z256"
@@ -27134,7 +27134,7 @@
     "name": "Z256",
     "start": "武汉",
     "end": "重庆",
-    "price": 0,
+    "price": 194,
     "start_time": "05:13",
     "end_time": "12:46",
     "run_id": "Z256"
@@ -27234,7 +27234,7 @@
     "name": "Z255",
     "start": "重庆",
     "end": "武汉",
-    "price": 0,
+    "price": 194,
     "start_time": "14:10",
     "end_time": "21:56",
     "run_id": "Z255"
@@ -27244,7 +27244,7 @@
     "name": "Z255",
     "start": "武汉",
     "end": "杭州",
-    "price": 0,
+    "price": 194,
     "start_time": "22:40",
     "end_time": "05:49",
     "run_id": "Z255"
@@ -27254,7 +27254,7 @@
     "name": "Z255",
     "start": "杭州",
     "end": "上海",
-    "price": 0,
+    "price": 15,
     "start_time": "05:55",
     "end_time": "07:57",
     "run_id": "Z255"
@@ -31364,7 +31364,7 @@
     "name": "Z26",
     "start": "上海",
     "end": "杭州",
-    "price": 0,
+    "price": 15,
     "start_time": "20:39",
     "end_time": "22:29",
     "run_id": "Z26"
@@ -31374,7 +31374,7 @@
     "name": "Z26",
     "start": "杭州",
     "end": "武汉",
-    "price": 0,
+    "price": 120,
     "start_time": "22:35",
     "end_time": "06:18",
     "run_id": "Z26"
@@ -32004,7 +32004,7 @@
     "name": "Z25",
     "start": "武汉",
     "end": "上海",
-    "price": 0,
+    "price": 315,
     "start_time": "22:15",
     "end_time": "07:45",
     "run_id": "Z25"
@@ -39106,7 +39106,7 @@
     "end": "北京",
     "price": 1495,
     "start_time": "20:55",
-    "end_time": "00:30 (12月13日)",
+    "end_time": "00:30",
     "run_id": "HX304"
   },
   {

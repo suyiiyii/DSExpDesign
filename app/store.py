@@ -85,6 +85,8 @@ class Database:
     def check(self):
         cities = [city.name for city in self._cities]
         for transport in self._transports:
+            if transport.price <= 0:
+                raise ServiceException(f"Price must be positive {transport}")
             if transport.start not in cities or transport.end not in cities:
                 raise ServiceException("City not found" + transport.start +" "+ transport.end)
 
