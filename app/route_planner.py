@@ -34,7 +34,7 @@ class TransportMap:
 
 
 def time2int(time_str: str) -> int:
-    '''将时间字符串转换为整数'''
+    """将时间字符串转换为整数"""
     h, m = map(int, time_str.split(':'))
     return h * 60 + m
 
@@ -52,23 +52,32 @@ def time_delta(t_from: str | int, t_to: str | int) -> int:
         return DAY - t_from + t_to
 
 
-def calc_total_cost(path: list[Transport]) -> (int, int):
-    '''计算路径的总花费和总时间'''
-    total_cost = sum(map(lambda x: x.price, path))
-    total_time = 0
-    for i in range(len(path) - 1):
-        total_time += time_delta(path[i].end_time, path[i + 1].start_time)
-    return total_cost, total_time
+def calc_total_cost(path: list[Transport], start_time: str = '') -> (int, int):
+    '''计算路径的总花费和总时间，如果传入了start_time，则计算从start_time开始的的总时间'''
+    total_price = sum(map(lambda x: x.price, path))
+    if start_time:
+        ts = TimeSegment(start_time, start_time) + TimeSegment(path[0].start_time, path[0].end_time)
+    else:
+        ts = TimeSegment(path[0].start_time, path[0].end_time)
+    for t in path[1:]:
+        ts += TimeSegment(t.start_time, t.end_time)
+
+    return total_price, ts.total_time
 
 class RoutePlanner:
     """静态类，路径规划的具体实现"""
 
     @staticmethod
-    def plan(tm: TransportMap, start: str, end: str, strategy: str, start_time: str = "") -> list[Transport]:
+    def plan(tm: TransportMap, start: str, end: str, strategy: str, start_time: str = "") -> tuple[
+        list[Transport], int, int]:
         if strategy == "cheapest":
-            return RoutePlanner.cheapest(tm, start, end)
+            path = RoutePlanner.cheapest(tm, start, end)
+            cost = calc_total_cost(path)
+            return path, cost[0], cost[1]
         elif strategy == "fastest":
-            return RoutePlanner.fastest_v2(tm, start, end, start_time)
+            path = RoutePlanner.fastest_v2(tm, start, end, start_time)
+            cost = calc_total_cost(path, start_time)
+            return path, cost[0], cost[1]
         elif strategy == "leastTransfers":
             return RoutePlanner.transfer_count_least(tm, start, end)
         else:

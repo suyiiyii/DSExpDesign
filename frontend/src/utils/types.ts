@@ -13,6 +13,12 @@ export interface Transport {
     run_id: string;
 }
 
+export interface PlanResult {
+    path: Transport[];
+    total_price: number;
+    total_time: number;
+}
+
 export interface ResultStatus {
     status: string;
     msg: string;

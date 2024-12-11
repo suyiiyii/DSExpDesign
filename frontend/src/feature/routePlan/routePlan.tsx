@@ -27,7 +27,7 @@ export default function PlanView() {
     const [strategy, setStrategy] = useState("fastest");
     const [start_time, setStart_time] = useState("00:00");
     const dispatch = useAppDispatch();
-    const {routeData, loading, error} = useAppSelector(state => state.routePlan)
+    const {routeData,total_price,total_time, loading, error} = useAppSelector(state => state.routePlan)
     const cityItemList = cityList.map((city) => {
         return {
             ...city,
@@ -123,9 +123,9 @@ export default function PlanView() {
                     <div>
                         <h2>规划结果</h2>
                         <TransportList transports={routeData}/>
-                        <p>总耗时：<span>{int2time(time2int(routeData.slice(-1)[0].end_time) - time2int(routeData[0].start_time))}</span>
+                        <p>总耗时：<span>{int2time(total_time)}</span>
                         </p>
-                        <p>总花费：<span>{routeData.reduce((p, c) => (p + c.price), 0)}￥</span></p>
+                        <p>总花费：<span>{total_price}￥</span></p>
                     </div>
                 )}
             </div>
