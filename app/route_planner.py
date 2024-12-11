@@ -79,14 +79,15 @@ class RoutePlanner:
             cost = calc_total_cost(path, start_time)
             return path, cost[0], cost[1]
         elif strategy == "leastTransfers":
-            return RoutePlanner.transfer_count_least(tm, start, end)
+            path = RoutePlanner.transfer_count_least_v2(tm, start, end)
+            cost = calc_total_cost(path)
+            return path, cost[0], cost[1]
         else:
             raise ValueError("Unknown strategy")
 
     @staticmethod
     def cheapest(tm: TransportMap, start: str, end: str) -> list[Transport]:
-        '''Dijkstra算法'''
-        # TODO： 未考虑时间
+        '''Dijkstra算法，不需要考虑时间，只考虑价格'''
         start_node = tm.data.get_node(start)
         end_node = tm.data.get_node(end)
         pri_queue = queue.PriorityQueue()
@@ -229,6 +230,26 @@ class RoutePlanner:
         paths = filter(RoutePlanner.time_reasonable, paths)
         return min(paths, key=RoutePlanner.calc_transfer_count)
 
-
+    @staticmethod
+    def transfer_count_least_v2(tm: TransportMap, start: str, end: str) -> list[Transport]:
+        '''Dijkstra算法'''
+        start_node = tm.data.get_node(start)
+        end_node = tm.data.get_node(end)
+        pri_queue = queue.PriorityQueue()
+        pri_queue.put((0, start_node, []))
+        visited = set()
+        while not pri_queue.empty():
+            distance, node, path = pri_queue.get()
+            if node in visited:
+                continue
+            visited.add(node)
+            if node == end_node:
+                return [edge.value for edge in path if isinstance(edge.value, Transport)]
+            for edge in node.edges:
+                if path:
+                    pri_queue.put((distance + (edge.value.run_id != path[-1].value.run_id), edge.to_node, path + [edge]))
+                else:
+                    pri_queue.put((distance, edge.to_node, path + [edge]))
+        return []
 
 tm = TransportMap(db.cities, db.transports)
