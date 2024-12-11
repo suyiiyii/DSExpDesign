@@ -1,6 +1,8 @@
 import queue
 from collections import defaultdict
 
+from typing_extensions import deprecated
+
 from .base_struct.adjacency_list_graph import AdjacencyListGraph
 from .base_struct.graph import Graph, Node, Edge
 from .models import City, Transport
@@ -75,7 +77,7 @@ class RoutePlanner:
             cost = calc_total_cost(path)
             return path, cost[0], cost[1]
         elif strategy == "fastest":
-            path = RoutePlanner.fastest_v2(tm, start, end, start_time)
+            path = RoutePlanner.fastest_v3(tm, start, end, start_time)
             cost = calc_total_cost(path, start_time)
             return path, cost[0], cost[1]
         elif strategy == "leastTransfers":
@@ -250,6 +252,42 @@ class RoutePlanner:
                     pri_queue.put((distance + (edge.value.run_id != path[-1].value.run_id), edge.to_node, path + [edge]))
                 else:
                     pri_queue.put((distance, edge.to_node, path + [edge]))
+        return []
+
+    @staticmethod
+    @deprecated
+    def transfer_count_least_v3(tm: TransportMap, start: str, end: str) -> list[Transport]:
+        '''基于Dijkstra思想，找到耗时最短的路径'''
+        start_node = tm.data.get_node(start)
+        end_node = tm.data.get_node(end)
+        pri_queue: queue.PriorityQueue[tuple[int, Node, list[Edge[Transport]]]] = queue.PriorityQueue()
+        pri_queue.put((0, start_node, []))
+        visited = set()
+        while not pri_queue.empty():
+            transfer_times, node, path = pri_queue.get()
+            if node in visited:
+                continue
+            visited.add(node)
+            if node == end_node:
+                return [edge.value for edge in path if isinstance(edge.value, Transport)]
+            # 给 edge 按照 node 分组
+            edges: dict[Node, list[Edge[Transport]]] = defaultdict(list[Edge[Transport]])
+            to_nodes = set()
+            for edge in node.edges:
+                edges[edge.to_node].append(edge)
+                to_nodes.add(edge.to_node)
+            # 优先选择加上等待时间，到达目的地最早的交通工具
+            for to_node in to_nodes:
+                def calc_transfer(edge: Edge[Transport]) -> int:
+                    '''计算换乘次数'''
+                    if path:
+                        return transfer_times + (edge.value.run_id != path[-1].value.run_id)
+                    else:
+                        return transfer_times
+                # 错误的方法，在换乘数最小的条件下，此时不清楚一条路是否比另一条路更优
+                edge = min(edges[to_node], key=lambda e: calc_transfer(e))
+                pri_queue.put(
+                    (calc_transfer(edge), edge.to_node, path + [edge]))
         return []
 
 tm = TransportMap(db.cities, db.transports)
