@@ -28,7 +28,7 @@ function TransportView() {
             <SnackbarProvider/>
             <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                 <h1>Transport View</h1>
-                <TransportList transports={transportList} doDelete={doDeleteTransport}/>
+                <TransportList transports={transportList} doDelete={doDeleteTransport} isVirtual={true}/>
                 <h2>Add Transport</h2>
                 <TransportForm/>
             </div>

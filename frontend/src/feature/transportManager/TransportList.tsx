@@ -16,18 +16,16 @@ const style = {
     backgroundColor: 'background.paper',
 };
 
-export function TransportList({transports, doDelete}: {
+export function TransportList({transports, doDelete, isVirtual}: {
     transports: Transport[],
     doDelete?: (transport: Transport) => void
+    isVirtual?: boolean
 }) {
 
-    function row(props: ListChildComponentProps) {
-        const {index, style} = props;
+    function item(index: number) {
         const transport = transports[index];
         return (
-            <React.Fragment key={JSON.stringify(transport)}>
-                <div style={style}>
-
+            <>
                 <ListItem
                     secondaryAction={
                         doDelete && (
@@ -48,9 +46,19 @@ export function TransportList({transports, doDelete}: {
                         </p>
                     </div>
                 </ListItem>
-                    {index !== transports.length - 1 && (
-                        <Divider component="li"/>
-                    )}
+                {index !== transports.length - 1 && (
+                    <Divider component="li"/>
+                )}
+            </>
+        )
+    }
+    function row(props: ListChildComponentProps) {
+        const {index, style} = props;
+        const transport = transports[index];
+        return (
+            <React.Fragment key={JSON.stringify(transport)}>
+                <div style={style}>
+                    {item(index)}
                 </div>
             </React.Fragment>
         );
@@ -58,6 +66,7 @@ export function TransportList({transports, doDelete}: {
 
     return (
         <List sx={style}>
+            {isVirtual ?
             <FixedSizeList
                 itemSize={100}
                 height={400}
@@ -65,7 +74,12 @@ export function TransportList({transports, doDelete}: {
                 width={380}
                 overscanCount={5}>
                 {row}
-            </FixedSizeList>
+            </FixedSizeList> :
+                transports.map((transport) => (
+                    item(transports.indexOf(transport))
+                ))
+            }
         </List>
     );
 }
+
