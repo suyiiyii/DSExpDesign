@@ -7,7 +7,6 @@ from .models import City, Transport
 from .store import db
 from .time_segment import TimeSegment
 
-DAY = 24 * 60
 
 class TransportMap:
     """内部存储城市和交通工具的图，用于进行路径规划"""
@@ -37,19 +36,6 @@ def time2int(time_str: str) -> int:
     """将时间字符串转换为整数"""
     h, m = map(int, time_str.split(':'))
     return h * 60 + m
-
-
-def time_delta(t_from: str | int, t_to: str | int) -> int:
-    '''计算两个时间字符串的时间差'''
-    if isinstance(t_from, str):
-        t_from = time2int(t_from)
-    if isinstance(t_to, str):
-        t_to = time2int(t_to)
-
-    if t_from <= t_to:
-        return t_to - t_from
-    else:
-        return DAY - t_from + t_to
 
 
 def calc_total_cost(path: list[Transport], start_time: str = '') -> (int, int):
