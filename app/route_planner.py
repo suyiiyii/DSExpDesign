@@ -5,7 +5,9 @@ from .base_struct.adjacency_list_graph import AdjacencyListGraph
 from .base_struct.graph import Graph, Node, Edge
 from .models import City, Transport
 from .store import db
+from .time_segment import TimeSegment
 
+DAY = 24 * 60
 
 class TransportMap:
     """内部存储城市和交通工具的图，用于进行路径规划"""
@@ -47,17 +49,26 @@ def time_delta(t_from: str | int, t_to: str | int) -> int:
     if t_from <= t_to:
         return t_to - t_from
     else:
-        return 24 * 60 - t_from + t_to
+        return DAY - t_from + t_to
+
+
+def calc_total_cost(path: list[Transport]) -> (int, int):
+    '''计算路径的总花费和总时间'''
+    total_cost = sum(map(lambda x: x.price, path))
+    total_time = 0
+    for i in range(len(path) - 1):
+        total_time += time_delta(path[i].end_time, path[i + 1].start_time)
+    return total_cost, total_time
 
 class RoutePlanner:
     """静态类，路径规划的具体实现"""
 
     @staticmethod
-    def plan(tm: TransportMap, start: str, end: str, strategy: str) -> list[Transport]:
+    def plan(tm: TransportMap, start: str, end: str, strategy: str, start_time: str = "") -> list[Transport]:
         if strategy == "cheapest":
             return RoutePlanner.cheapest(tm, start, end)
         elif strategy == "fastest":
-            return RoutePlanner.fastest_v2(tm, start, end)
+            return RoutePlanner.fastest_v2(tm, start, end, start_time)
         elif strategy == "leastTransfers":
             return RoutePlanner.transfer_count_least(tm, start, end)
         else:
@@ -109,12 +120,12 @@ class RoutePlanner:
                 # 选择暂未出发，但是最近出发的交通工具
                 if path:
                     available_transports = filter(
-                        lambda e: time2int(e.value.start_time) >= time2int(path[-1].end_time),
+                        lambda e: time2int(e.value.start_time_int) >= time2int(path[-1].end_time),
                         edges[to_node])
                 else:
                     available_transports = edges[to_node]
                 try:
-                    edge = min(available_transports, key=lambda e: time2int(e.value.start_time))
+                    edge = min(available_transports, key=lambda e: time2int(e.value.start_time_int))
                 except ValueError:
                     continue
 
@@ -144,16 +155,17 @@ class RoutePlanner:
         '''深搜，暴力搜索所有路径，返回耗时最短的路径'''
         paths = RoutePlanner.get_all_paths(tm, start, end)
         paths = filter(RoutePlanner.time_reasonable, paths)
-        return min(paths, key=lambda ts: (time2int(ts[-1].end_time) - time2int(ts[0].start_time)))
+        return min(paths, key=lambda ts: (time2int(ts[-1].end_time_int) - time2int(ts[0].start_time_int)))
 
     @staticmethod
-    def fastest_v2(tm: TransportMap, start: str, end: str) -> list[Transport]:
+    def fastest_v2(tm: TransportMap, start: str, end: str, start_time: int | str | TimeSegment) -> list[Transport]:
         '''基于Dijkstra思想，找到耗时最短的路径'''
-        # todo: 需要统一开始的时间，不然图上的起始时间都不一样，无法比较
+        if not isinstance(start_time, TimeSegment):
+            start_time = TimeSegment(start_time, start_time)
         start_node = tm.data.get_node(start)
         end_node = tm.data.get_node(end)
-        pri_queue: queue.PriorityQueue[tuple[int, Node, list[Edge[Transport]]]] = queue.PriorityQueue()
-        pri_queue.put((0, start_node, []))
+        pri_queue: queue.PriorityQueue[tuple[TimeSegment, Node, list[Edge[Transport]]]] = queue.PriorityQueue()
+        pri_queue.put((start_time, start_node, []))
         visited = set()
         while not pri_queue.empty():
             current_time, node, path = pri_queue.get()
@@ -170,14 +182,13 @@ class RoutePlanner:
                 to_nodes.add(edge.to_node)
             # 优先选择加上等待时间，到达目的地最早的交通工具
             for to_node in to_nodes:
-                if path:
-                    edge = min(edges[to_node], key=lambda e: time_delta(path[-1].value.end_time, e.value.end_time))
-                    pri_queue.put(
-                        (time_delta(path[-1].value.end_time, edge.value.end_time), edge.to_node, path + [edge]))
-                else:
-                    edge = min(edges[to_node], key=lambda e: time2int(e.value.start_time))
-                    pri_queue.put((current_time + time_delta(edge.value.start_time, edge.value.end_time), edge.to_node,
-                                   path + [edge]))
+                def calc_real_cost_time(edge: Edge[Transport]) -> TimeSegment:
+                    '''计算实际的时间'''
+                    return current_time + TimeSegment(edge.value.start_time, edge.value.end_time)
+
+                edge = min(edges[to_node], key=lambda e: calc_real_cost_time(e))
+                pri_queue.put(
+                    (calc_real_cost_time(edge), edge.to_node, path + [edge]))
         return []
     @staticmethod
     def transfer_count_least(tm: TransportMap, start: str, end: str) -> list[Transport]:

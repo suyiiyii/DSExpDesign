@@ -25,6 +25,7 @@ export default function PlanView() {
     const [startCity, setStartCity] = useState("");
     const [endCity, setEndCity] = useState("");
     const [strategy, setStrategy] = useState("fastest");
+    const [start_time, setStart_time] = useState("00:00");
     const dispatch = useAppDispatch();
     const {routeData, loading, error} = useAppSelector(state => state.routePlan)
     const cityItemList = cityList.map((city) => {
@@ -38,13 +39,13 @@ export default function PlanView() {
         return option.name === startCity || option.name === endCity
     }
 
-    function handlePlan(start: string, end: string, strategy: string) {
-        dispatch(planRoute({start, end, strategy}))
+    function handlePlan(start: string, end: string, strategy: string, start_time: string) {
+        dispatch(planRoute({start, end, strategy, start_time}))
     }
 
     useEffect(() => {
-        handlePlan(startCity, endCity, strategy);
-    }, [startCity, endCity, strategy]);
+        handlePlan(startCity, endCity, strategy, start_time);
+    }, [startCity, endCity, strategy, start_time]);
 
     return (
         <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
@@ -81,6 +82,15 @@ export default function PlanView() {
                             </MenuItem>
                         ))}
                     </TextField>
+                    <div style={{height: 16}}></div>
+                    <TextField
+                        label="开始时间"
+                        type="time"
+                        value={start_time}
+                        onChange={(event) => setStart_time(event.target.value)}
+                        sx={{width: 300}}
+                        required
+                    />
                 </FormControl>
                 <div style={{height: 16}}></div>
                 <FormControl>
@@ -102,7 +112,7 @@ export default function PlanView() {
                 <div style={{height: 16}}></div>
                 <Button style={{marginTop: 16}} variant="contained"
                         onClick={() => {
-                            handlePlan(startCity, endCity, strategy)
+                            handlePlan(startCity, endCity, strategy, start_time)
                         }}
                         disabled={!startCity || !endCity}>开始规划</Button>
             </div>

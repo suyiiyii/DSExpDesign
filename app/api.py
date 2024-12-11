@@ -62,11 +62,12 @@ class RoutePlanReq:
     strategy: str
     start: str
     end: str
+    start_time: str
 
 
 @api.post("/routePlan", response_model=list[Transport])
 async def get_route_plan(req: RoutePlanReq):
-    return RoutePlanner.plan(tm, req.start, req.end, req.strategy)
+    return RoutePlanner.plan(tm, req.start, req.end, req.strategy, req.start_time)
 
 
 api.mount("", app=StaticFiles(directory="app/static", html=True), name="static")

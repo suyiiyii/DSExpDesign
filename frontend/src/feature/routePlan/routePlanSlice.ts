@@ -4,11 +4,16 @@ import {Transport} from "../../utils/types";
 
 export const planRoute = createAsyncThunk(
     'routePlan/planRoute',
-    async ({start, end, strategy}: { start: string, end: string, strategy: string }) => {
+    async ({start, end, strategy, start_time}: {
+        start: string,
+        end: string,
+        strategy: string,
+        start_time: string
+    }) => {
         if (!start || !end) {
             throw new Error("start or end is empty");
         }
-        const response = await axios.post('/api/routePlan', {start, end, strategy});
+        const response = await axios.post('/api/routePlan', {start, end, strategy, start_time});
         return response.data;
     }
 )
