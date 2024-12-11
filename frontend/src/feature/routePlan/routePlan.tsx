@@ -25,7 +25,7 @@ export default function PlanView() {
     const [startCity, setStartCity] = useState("");
     const [endCity, setEndCity] = useState("");
     const [strategy, setStrategy] = useState("fastest");
-    const [start_time, setStart_time] = useState("00:00");
+    const [start_time, setStart_time] = useState("08:00");
     const dispatch = useAppDispatch();
     const {routeData,total_price,total_time, loading, error} = useAppSelector(state => state.routePlan)
     const cityItemList = cityList.map((city) => {
