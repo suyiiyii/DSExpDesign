@@ -1,8 +1,6 @@
 import queue
 from collections import defaultdict
 
-from typing_extensions import deprecated
-
 from .base_struct.adjacency_list_graph import AdjacencyListGraph
 from .base_struct.graph import Graph, Node, Edge
 from .models import City, Transport
@@ -255,9 +253,8 @@ class RoutePlanner:
         return []
 
     @staticmethod
-    @deprecated
     def transfer_count_least_v3(tm: TransportMap, start: str, end: str) -> list[Transport]:
-        '''基于Dijkstra思想，找到耗时最短的路径'''
+        '''弃用，基于Dijkstra思想，找到耗时最短的路径'''
         start_node = tm.data.get_node(start)
         end_node = tm.data.get_node(end)
         pri_queue: queue.PriorityQueue[tuple[int, Node, list[Edge[Transport]]]] = queue.PriorityQueue()
