@@ -29,12 +29,14 @@ async def get_transports():
 @api.post("/city", response_model=City)
 async def add_city(city: City):
     db.add_city(city)
+    tm.load(db.cities, db.transports)
     return city
 
 
 @api.post("/transport", response_model=Transport)
 async def add_transport(transport: Transport):
     db.add_transport(transport)
+    tm.load(db.cities, db.transports)
     return transport
 
 
@@ -42,6 +44,7 @@ async def add_transport(transport: Transport):
 async def delete_city(city: City):
     try:
         db.delete_city(city)
+        tm.load(db.cities, db.transports)
     except ServiceException as e:
         return ResultStatus(status="error", msg=str(e))
     return ResultStatus(status="success", msg="delete success")
@@ -50,6 +53,7 @@ async def delete_city(city: City):
 @api.post("/transport/delete", response_model=ResultStatus)
 async def delete_transport(transport: Transport):
     db.delete_transport(transport)
+    tm.load(db.cities, db.transports)
     return ResultStatus(status="success", msg="delete success")
 
 @api.get("/routeMap", response_model=dict[str, str])
