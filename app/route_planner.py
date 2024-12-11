@@ -183,6 +183,29 @@ class RoutePlanner:
             visited.add(node)
             if node == end_node:
                 return [edge.value for edge in path if isinstance(edge.value, Transport)]
+            for edge in node.edges:
+                pri_queue.put(
+                    (current_time + TimeSegment(edge.value.start_time, edge.value.end_time), edge.to_node,
+                     path + [edge]))
+        return []
+
+    @staticmethod
+    def fastest_v3(tm: TransportMap, start: str, end: str, start_time: int | str | TimeSegment) -> list[Transport]:
+        '''基于Dijkstra思想，找到耗时最短的路径'''
+        if not isinstance(start_time, TimeSegment):
+            start_time = TimeSegment(start_time, start_time)
+        start_node = tm.data.get_node(start)
+        end_node = tm.data.get_node(end)
+        pri_queue: queue.PriorityQueue[tuple[TimeSegment, Node, list[Edge[Transport]]]] = queue.PriorityQueue()
+        pri_queue.put((start_time, start_node, []))
+        visited = set()
+        while not pri_queue.empty():
+            current_time, node, path = pri_queue.get()
+            if node in visited:
+                continue
+            visited.add(node)
+            if node == end_node:
+                return [edge.value for edge in path if isinstance(edge.value, Transport)]
             # 给 edge 按照 node 分组
             edges: dict[Node, list[Edge[Transport]]] = defaultdict(list[Edge[Transport]])
             to_nodes = set()
