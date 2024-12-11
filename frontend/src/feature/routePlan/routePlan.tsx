@@ -83,17 +83,6 @@ export default function PlanView() {
                         ))}
                     </TextField>
                     <div style={{height: 16}}></div>
-                    <TextField
-                        label="开始时间"
-                        type="time"
-                        value={start_time}
-                        onChange={(event) => setStart_time(event.target.value)}
-                        sx={{width: 300}}
-                        required
-                    />
-                </FormControl>
-                <div style={{height: 16}}></div>
-                <FormControl>
                     <FormLabel id="demo-radio-buttons-group-label">规划策略</FormLabel>
                     <RadioGroup
                         row
@@ -108,6 +97,17 @@ export default function PlanView() {
                         <FormControlLabel value="cheapest" control={<Radio/>} label="最省钱"/>
                         <FormControlLabel value="leastTransfers" control={<Radio/>} label="最少中转"/>
                     </RadioGroup>
+                    <div style={{height: 16}}></div>
+                    {strategy === "fastest" &&
+                        <TextField
+                            label="开始时间"
+                            type="time"
+                            value={start_time}
+                            onChange={(event) => setStart_time(event.target.value)}
+                            sx={{width: 300}}
+                            required
+                        />
+                    }
                 </FormControl>
                 <div style={{height: 16}}></div>
                 <Button style={{marginTop: 16}} variant="contained"
