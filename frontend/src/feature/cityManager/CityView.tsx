@@ -25,6 +25,14 @@ function CityView() {
     const [loading, setLoading] = useState(false);
 
     function doAddCity(cityName: string) {
+        if (cityName === "") {
+            enqueueSnackbar("城市名称不能为空", {variant: "error"});
+            return;
+        }
+        if (cityList.find(city => city.name === cityName)) {
+            enqueueSnackbar("城市已存在", {variant: "error"});
+            return;
+        }
         setLoading(true);
         addCity(cityName).unwrap().then(() => {
             setCityName("");
