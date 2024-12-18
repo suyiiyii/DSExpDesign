@@ -27,6 +27,7 @@ export function TransportForm() {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
+        transport.run_id = transport.name
         addTransport(transport);
         setTransport(initialTransport); // Reset form after submission
     };
@@ -109,13 +110,13 @@ export function TransportForm() {
                 onChange={handleChange}
                 required
             />
-            <TextField
-                label="Run ID"
-                name="run_id"
-                value={transport.run_id}
-                onChange={handleChange}
-                required
-            />
+            {/*<TextField*/}
+            {/*    label="Run ID"*/}
+            {/*    name="run_id"*/}
+            {/*    value={transport.run_id}*/}
+            {/*    onChange={handleChange}*/}
+            {/*    required*/}
+            {/*/>*/}
             <Button type="submit" variant="contained" color="primary">
                 Submit
             </Button>
