@@ -16,10 +16,9 @@ const style = {
     backgroundColor: 'background.paper',
 };
 
-export function TransportList({transports, doDelete, isVirtual}: {
+export function TransportList({transports, doDelete}: {
     transports: Transport[],
     doDelete?: (transport: Transport) => void
-    isVirtual?: boolean
 }) {
 
     function item(index: number) {
@@ -66,12 +65,12 @@ export function TransportList({transports, doDelete, isVirtual}: {
 
     return (
         <List sx={style}>
-            {isVirtual ?
+            {transports.length > 10 ?
             <FixedSizeList
                 itemSize={100}
                 height={400}
                 itemCount={transports.length}
-                width={380}
+                width={360}
                 overscanCount={5}>
                 {row}
             </FixedSizeList> :
