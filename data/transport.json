@@ -25494,7 +25494,7 @@
     "name": "K4293",
     "start": "天津",
     "end": "上海",
-    "price": 163.5,
+    "price": 163,
     "start_time": "04:15",
     "end_time": "00:49",
     "run_id": "K4293"
@@ -25504,7 +25504,7 @@
     "name": "K2550",
     "start": "天津",
     "end": "北京",
-    "price": 21.5,
+    "price": 21,
     "start_time": "04:47",
     "end_time": "06:11",
     "run_id": "K2550"
@@ -26214,7 +26214,7 @@
     "name": "K2549",
     "start": "北京",
     "end": "天津",
-    "price": 21.5,
+    "price": 21,
     "start_time": "17:30",
     "end_time": "21:02",
     "run_id": "K2549"
@@ -26244,7 +26244,7 @@
     "name": "K4294",
     "start": "天津",
     "end": "哈尔滨",
-    "price": 152.5,
+    "price": 152,
     "start_time": "21:24",
     "end_time": "16:55",
     "run_id": "K4294"
