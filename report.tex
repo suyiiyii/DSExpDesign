@@ -8,6 +8,7 @@
 \usepackage{xcolor}
 \usepackage[a4paper, margin=1in]{geometry}
 \usepackage{hyperref}
+\usepackage{graphicx}
 
 
 \lstset{
@@ -443,7 +444,7 @@ def dijkstra(graph, start, end):
     \end{itemize}
 
     \subsection{最省钱路径规划实现}
-    \begin{lstlisting}
+    \begin{lstlisting}[language=Python]
     @staticmethod
     def cheapest(tm: TransportMap, start: str, end: str) -> list[Transport]:
         '''Dijkstra算法，不需要考虑时间，只考虑价格'''
@@ -466,7 +467,7 @@ def dijkstra(graph, start, end):
 
     \subsubsection{最少中转次数路径规划实现}
 
-    \begin{lstlisting}
+    \begin{lstlisting}[language=Python]
     @staticmethod
     def transfer_count_least_v2(tm: TransportMap, start: str, end: str) -> list[Transport]:
         '''Dijkstra算法'''
@@ -491,7 +492,7 @@ def dijkstra(graph, start, end):
     \end{lstlisting}
 
     \subsubsection{最快时间路径规划实现}
-    \begin{lstlisting}
+    \begin{lstlisting}[language=Python]
     @staticmethod
     def fastest_v3(tm: TransportMap, start: str, end: str, start_time: int | str | TimeSegment) -> list[Transport]:
         '''基于Dijkstra思想，找到耗时最短的路径'''
@@ -536,7 +537,7 @@ def dijkstra(graph, start, end):
 
     实现一个可用的路径规划系统需要大量数据，所以从网络采集了大量铁路交通和航班的数据，并使用 Python 进行数据处理，生成一个可用的交通工具列表。
     目前一共收集了15个城市和4130条交通工具的数据：
-    \begin{lstlisting}
+    \begin{lstlisting}[language=Python]
 [
   {
     "name": "上海"
@@ -548,7 +549,7 @@ def dijkstra(graph, start, end):
 ...
     \end{lstlisting}
 
-    \begin{lstlisting}
+    \begin{lstlisting}[language=Python]
 [
   {
     "type": "train",
@@ -571,18 +572,179 @@ def dijkstra(graph, start, end):
     \end{lstlisting}
     由于数据量过大，无法直接展示，这里只展示一部分数据。更多数据请访问项目仓库\ref{项目仓库}中的数据文件\ref{city_data}和\ref{transport_data}。
     \subsubsection{特挑数据}
-    为了更好的展现算法的效果，我选择了部分数据组成了几个有代表性的数据集。详情请查看\ref{项目仓库}。
+    为了更好的展现算法的效果，我选择了部分数据组成了几个有代表性的数据集。详情请查看\ref{项目仓库}
+
     \subsection{测试结果}
+    项目提供了一个功能完善的前端页面，所以测试相关的操作都在前端完成
 
 
+    目前主要分为四个模块，分别是路径规划、地点查询、路线查询和路线图。同时，最左边有一个下拉输入框，允许用户选择不同的数据集（例如全量数据）来进行路径规划。
+
+    \paragraph{路径规划} 如图\ref{fig:screenshot001}所示：
+    \begin{enumerate}
+        \item 城市选择：用户需要选择起始城市和目标城市。这可以通过下拉菜单来完成，菜单中列出了可选的城市列表。
+        \item 规划策略：用户可以选择三种不同的规划策略：
+        \begin{itemize}
+            \item 最快：选择此选项将优先考虑时间最短的路线。
+            \item 最省钱：选择此选项将优先考虑成本最低的路线。
+            \item 最少中转：选择此选项将优先考虑中转次数最少的路线。
+        \end{itemize}
+        \item 开始时间：用户可以设置出发的具体时间。在当前示例中，已经设置了出发时间为08:00。
+        \item 开始规划：点击这个按钮后，系统将根据用户的选择生成相应的路径规划方案。
+    \end{enumerate}
+    \begin{figure}
+        \centering
+        \includegraphics[width=\linewidth]{img/screenshot001}
+        \caption[]{路径规划}
+        \label{fig:screenshot001}
+    \end{figure}
+
+    \paragraph{地点查询} 图如\ref{fig:screenshot004}所示：
+    \begin{enumerate}
+        \item 城市查询：这是一个列表，用户可以在这里看到所有的城市。
+        \item 删除城市：用户可以城市列表中的城市进行删除（存在交通方式的城市不能删除）。
+        \item 添加城市：用户可以添加表单添加一个新的城市。
+    \end{enumerate}
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.5\linewidth]{img/screenshot004}
+        \caption{地点查询}
+        \label{fig:screenshot004}
+    \end{figure}
+
+    \paragraph{路线查询} 如图\ref{fig:screenshot006}所示：
+    \begin{enumerate}
+        \item 路线查询：这是一个列表，用户可以在这里看到所有的路线。
+        \item 删除路线：用户可以路线列表中的路线进行删除。
+        \item 路线筛选：用户可以通过交通方式、出发和目的地筛选出符合条件的路线。
+        \item 添加路线：用户可以填写表单添加一个新的路线。
+    \end{enumerate}
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.5\linewidth]{img/screenshot006}
+        \caption[]{路线查询}
+        \label{fig:screenshot006}
+    \end{figure}
+
+    \paragraph{路线图} 如图\ref{fig:screenshot007}所示：
+    \begin{enumerate}
+        \item 显示路线：将系统内的所有路线以可视化的图形展示出来（仅小数据时可用）。
+    \end{enumerate}
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.7\linewidth]{img/screenshot007}
+        \caption{路线图}
+        \label{fig:screenshot007}
+    \end{figure}
+
+    \subsubsection{最省钱路径规划}
+    \begin{enumerate}
+        \item 从上海到北京的最省钱路径规划结果，如图\ref{fig:screenshot002}所示。
+    \end{enumerate}
+
+    \subsubsection{最少中转路径规划}
+    \begin{enumerate}
+        \item 从上海到北京的最少中转路径规划结果，图如\ref{fig:screenshot003}所示。
+    \end{enumerate}
+
+    \begin{figure}[htbp]
+        \centering
+        \begin{minipage}[b]{0.45\linewidth}
+            \centering
+            \includegraphics[width=\linewidth]{img/screenshot002}
+            \caption{最省钱路径规划结果}
+            \label{fig:screenshot002}
+        \end{minipage}
+        \hspace{0.05\linewidth}
+        \begin{minipage}[b]{0.45\linewidth}
+            \centering
+            \includegraphics[width=\linewidth]{img/screenshot003}
+            \caption{最少中转路径规划结果}
+            \label{fig:screenshot003}
+        \end{minipage}
+    \end{figure}
+
+    \subsubsection{最快路径规划算法}
+
+    \paragraph{exp1-1}
+    在当前的情况下，如图\ref{fig:screenshot008}所示，途径长沙。
+
+    因为从武汉起步，如果途径厦门，由于到达之后下一程需要隔日才能发车，所以优先选择了途径长沙。
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.7\linewidth]{img/screenshot008}
+        \caption{最快路径规划结果-exp1-1}
+        \label{fig:screenshot008}
+    \end{figure}
+
+    \paragraph{exp2-1}
+    如果此时添加一条从厦门到广州的列车，但是恰好在20:00之后发车，可以看到如图\ref{fig:screenshot009}所示，现在选择途径厦门。
+
+    这是因为虽然途径厦门的全程时间要比途径长沙的全程时间长，但是因为设置为08:00出发，考虑到了等待第一班车的时间，所以还是选择途径厦门。
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.7\linewidth]{img/screenshot009}
+        \caption{最快路径规划结果-exp2-1}
+        \label{fig:screenshot009}
+    \end{figure}
+
+    \paragraph{exp2-2}
+    此时，我们再把开始时间调到 14:00，可以看到如图\ref{fig:screenshot010}所示，此时又选择途径长沙，而不是选择途径厦门。
+
+    这是因为14:00出发时，已经赶不上当日途径厦门的列车，所以会选择途径长沙。
+
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.7\linewidth]{img/screenshot010}
+        \caption{最快路径规划结果-exp2-2}
+        \label{fig:screenshot010}
+    \end{figure}
+
+
+    \section{项目亮点}
+    \begin{itemize}
+        \item 基于图数据结构的路径规划系统：通过使用图数据结构，可以轻松地实现路径规划，包括最省钱、最少中转和最快到达三种策略。
+        \item 高效的算法设计：使用优化后的 Dijkstra 算法，避免了传统的遍历算法的 $O(n!)$的时间复杂度
+        \item 直观的用户交互：可以轻松地添加、删除和修改城市和交通路线的数据，实现数据的动态更新。
+        \item 可视化展示功能：可以轻松地展示规划结果，包括时间、成本、中转次数等指标。
+        \item 高效的数据处理能力：可以处理大规模数据，包括15个城市、4130条交通路线的数据集。
+    \end{itemize}
 
     \section{总结}
 
     \subsection{项目成果}
+    本项目成功实现了一个全国交通咨询模拟系统，主要取得了以下成果：
 
+    \begin{itemize}
+        \item 实现了基于图数据结构的路径规划系统，支持最快到达、最省钱和最少中转三种规划策略。
+        \item 开发了完整的前后端分离架构，前端提供直观的用户界面，后端提供高效的算法实现。
+        \item 成功处理了复杂的时间约束问题，包括等待时间、过夜等情况的合理计算。
+        \item 支持大规模数据处理，目前可处理15个城市、4130条交通路线的数据集。
+        \item 提供了完善的数据管理功能，包括城市和交通路线的增删改查。
+        \item 实现了路线的可视化展示功能，直观展示规划结果。
+    \end{itemize}
+    
     \subsection{项目不足}
+    尽管项目已经基本实现了预期功能，但仍存在以下不足：
 
+    \begin{itemize}
+        \item 数据存储方式较为简单，仅使用JSON文件存储，缺乏数据库支持。
+        \item 路线可视化功能在大规模数据下性能欠佳，仅适用于小规模数据展示。
+        \item 算法优化空间仍然较大，在处理大规模数据时性能可能受到影响。
+        \item 系统安全性和容错性有待加强，缺乏完善的异常处理机制。
+    \end{itemize}
+    
     \subsection{未来改进方向}
+    针对项目存在的不足，提出以下改进建议：
+
+    \begin{itemize}
+        \item 引入数据库系统，提升数据存储和查询效率。
+        \item 优化路线可视化算法，提高大规模数据下的展示性能。
+        \item 引入更多启发式算法，提升路径规划效率。
+        \item 考虑引入实时数据，支持动态调整和实时更新。
+        \item 增强系统的错误处理和日志记录功能。
+        \item 优化系统架构，提高系统的可扩展性和维护性。
+    \end{itemize}
 
     \appendix
 
