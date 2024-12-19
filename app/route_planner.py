@@ -4,7 +4,7 @@ from collections import defaultdict
 from .base_struct.adjacency_list_graph import AdjacencyListGraph
 from .base_struct.graph import Graph, Node, Edge
 from .models import City, Transport
-from .store import db
+from .store import get_database
 from .time_segment import TimeSegment
 
 
@@ -40,6 +40,8 @@ def time2int(time_str: str) -> int:
 
 def calc_total_cost(path: list[Transport], start_time: str = '') -> (int, int):
     '''计算路径的总花费和总时间，如果传入了start_time，则计算从start_time开始的的总时间'''
+    if not path:
+        return 0, 0
     total_price = sum(map(lambda x: x.price, path))
     if start_time:
         ts = TimeSegment(start_time, start_time) + TimeSegment(path[0].start_time, path[0].end_time)
@@ -273,4 +275,8 @@ class RoutePlanner:
                     (calc_transfer(edge), edge.to_node, path + [edge]))
         return []
 
-tm = TransportMap(db.cities, db.transports)
+
+def get_tm(dataset: str):
+    db = get_database(dataset)
+    tm = TransportMap(db.cities, db.transports)
+    return tm

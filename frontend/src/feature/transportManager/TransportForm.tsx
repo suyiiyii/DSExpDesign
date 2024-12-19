@@ -36,8 +36,9 @@ export function TransportForm() {
         return option.name === transport.start || option.name === transport.end
     }
 
-    console.log(transport)
-
+    function errorCheck() {
+        return transport.price <= 0
+    }
     return (
         <Box component="form" onSubmit={handleSubmit} sx={{display: 'flex', flexDirection: 'column', gap: 2}}>
             <TextField
@@ -91,6 +92,8 @@ export function TransportForm() {
                 name="price"
                 type="number"
                 value={transport.price}
+                error={errorCheck()}
+                helperText={errorCheck() ? "价格必须大于0" : ""}
                 onChange={handleChange}
                 required
             />
@@ -117,7 +120,7 @@ export function TransportForm() {
             {/*    onChange={handleChange}*/}
             {/*    required*/}
             {/*/>*/}
-            <Button type="submit" variant="contained" color="primary">
+            <Button type="submit" variant="contained" color="primary" disabled={errorCheck()}>
                 Submit
             </Button>
         </Box>

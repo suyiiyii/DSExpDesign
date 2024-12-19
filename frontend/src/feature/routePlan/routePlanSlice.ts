@@ -1,6 +1,8 @@
 import {createAsyncThunk, createSlice, SerializedError} from "@reduxjs/toolkit";
 import axios from "axios";
 import {PlanResult, Transport} from "../../utils/types";
+import {selectDataset} from "../../utils/datasetSlice";
+import {RootState} from "../../app/store";
 
 export const planRoute = createAsyncThunk(
     'routePlan/planRoute',
@@ -9,11 +11,18 @@ export const planRoute = createAsyncThunk(
         end: string,
         strategy: string,
         start_time: string
-    }):Promise<PlanResult> => {
+    }, thunkAPI): Promise<PlanResult> => {
         if (!start || !end) {
             throw new Error("start or end is empty");
         }
-        const response = await axios.post('/api/routePlan', {start, end, strategy, start_time});
+        const state = thunkAPI.getState() as RootState;
+        const dataset = selectDataset(state);
+        const response = await axios.post('/api/routePlan', {
+            start,
+            end,
+            strategy,
+            start_time
+        }, {headers: {Dataset: dataset}});
         return response.data;
     }
 )

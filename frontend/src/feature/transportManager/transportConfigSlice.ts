@@ -1,19 +1,20 @@
-import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
+import {createApi} from "@reduxjs/toolkit/query/react";
 import {Transport} from "../../utils/types";
+import {dynamicQuery} from "../../utils/query";
 
 
 export const transportConfigSlice = createApi({
     reducerPath: 'transportConfig',
-    baseQuery: fetchBaseQuery({baseUrl: '/api/transport'}),
+    baseQuery: dynamicQuery,
     tagTypes: ['TransportConfig'],
     endpoints: (builder) => ({
         getTransportList: builder.query<Transport[],void>({
-            query: () => '',
+            query: () => '/transport',
             providesTags: ['TransportConfig']
         }),
         addTransport: builder.mutation<void,Transport>({
             query: (transport: Transport) => ({
-                url: '',
+                url: '/transport',
                 method: 'POST',
                 body: transport
             }),
@@ -21,7 +22,7 @@ export const transportConfigSlice = createApi({
         }),
         deleteTransport: builder.mutation<void,Transport>({
             query: (transport: Transport) => ({
-                url: '/delete',
+                url: '/transport/delete',
                 method: 'POST',
                 body: transport
             }),

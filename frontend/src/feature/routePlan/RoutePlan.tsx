@@ -119,7 +119,7 @@ export default function PlanView() {
             <div>
                 {loading && <div>loading...</div>}
                 {error && <div>{error.message}</div>}
-                {Boolean(routeData.length) && (
+                {routeData.length > 0 && (
                     <div>
                         <h2>规划结果</h2>
                         <TransportList transports={routeData}/>
@@ -128,6 +128,10 @@ export default function PlanView() {
                         <p>总花费：<span>{total_price}￥</span></p>
                     </div>
                 )}
+                {routeData.length === 0 && !loading && !error && (
+                    <div style={{marginTop: 10}}>无可用路径</div>
+                )
+                }
             </div>
         </div>
     )

@@ -14,15 +14,18 @@ class ServiceException(Exception):
 
 class Database:
 
-    def __init__(self):
-        self._cities: list[City] = self._load()[0]
-        self._transports: list[Transport] = self._load()[1]
+    def __init__(self, city_file: Path = DATA_CITY_PATH, transport_file: Path = DATA_TRANSPORT_PATH):
+        self._cities: list[City]
+        self._transports: list[Transport]
+        self._city_file_path = city_file
+        self._transport_file_path = transport_file
+        self._load()
         self._save_route_map()
 
     def _store(self):
-        with open(DATA_CITY_PATH, "w", encoding="utf-8") as f:
+        with open(self._city_file_path, "w", encoding="utf-8") as f:
             f.write(json.dumps([city.__dict__ for city in self._cities], ensure_ascii=False, indent=2))
-        with open(DATA_TRANSPORT_PATH, "w", encoding="utf-8") as f:
+        with open(self._transport_file_path, "w", encoding="utf-8") as f:
             f.write(json.dumps([transport.__dict__ for transport in self._transports], ensure_ascii=False, indent=2))
         print("Data stored successfully")
         return
@@ -44,11 +47,13 @@ class Database:
         with open(GRAPH_PATH, "w", encoding="utf-8") as f:
             f.write(graph)
 
-    def _load(self) -> (list[City], list[Transport]):
-        with open(DATA_CITY_PATH, "r", encoding="utf-8") as f:
+    def _load(self) -> (
+            list[City], list[Transport]):
+        with open(self._city_file_path, "r", encoding="utf-8") as f:
             cities = [City(**city) for city in json.loads(f.read())]
-        with open(DATA_TRANSPORT_PATH, "r", encoding="utf-8") as f:
+        with open(self._transport_file_path, "r", encoding="utf-8") as f:
             transports = [Transport(**transport) for transport in json.loads(f.read())]
+        self._cities, self._transports = cities, transports
         return cities, transports
 
     @property
@@ -91,8 +96,20 @@ class Database:
                 raise ServiceException("City not found" + transport.start +" "+ transport.end)
 
 
-db = Database()
-db.check()
+def get_database(dataset: str):
+    new_db = None
+    if dataset == "full":
+        new_db = Database()
+    elif dataset == "exp1":
+        new_db = Database(DATA_CITY_PATH.parent / "city_exp1.json", DATA_CITY_PATH.parent / "transport_exp1.json")
+    elif dataset == "exp2":
+        new_db = Database(DATA_CITY_PATH.parent / "city_exp2.json", DATA_CITY_PATH.parent / "transport_exp2.json")
+    new_db.check()
+    return new_db
+
+
 if __name__ == '__main__':
+    db = Database()
+    db.check()
     print(db.cities)
     print(db.transports)

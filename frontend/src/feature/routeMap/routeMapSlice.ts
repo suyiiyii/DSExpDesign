@@ -1,12 +1,13 @@
-import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
+import {createApi} from "@reduxjs/toolkit/query/react";
+import {dynamicQuery} from "../../utils/query";
 
 export const routeMapSlice = createApi({
     reducerPath: 'routeMap',
-    baseQuery: fetchBaseQuery({baseUrl: '/api/routeMap'}),
+    baseQuery: dynamicQuery,
     tagTypes: ['RouteMap'],
     endpoints: (builder) => ({
         getRouteMap: builder.query<{data: string}, void>({
-            query: () => '',
+            query: () => '/routeMap',
             providesTags: ['RouteMap']
         })
     })
