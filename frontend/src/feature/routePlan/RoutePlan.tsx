@@ -49,93 +49,95 @@ export default function PlanView() {
     }, [startCity, endCity, strategy, start_time]);
 
     return (
-        <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
-            <h1>Route Plan</h1>
-            <div>
-                <FormControl>
-                    <FormLabel id="demo-radio-buttons-group-label">城市选择</FormLabel>
-                    <TextField
-                        select
-                        label="起始城市"
-                        value={startCity}
-                        onChange={(event) => setStartCity(event.target.value)}
-                        sx={{width: 300}}
-                        required
-                    >
-                        {cityItemList.map((city) => (
-                            <MenuItem key={city.name} value={city.name} disabled={disableOption(city)}>
-                                {city.name}
-                            </MenuItem>
-                        ))}
-                    </TextField>
-                    <div style={{height: 16}}></div>
-                    <TextField
-                        select
-                        label="目标城市"
-                        value={endCity}
-                        onChange={(event) => setEndCity(event.target.value)}
-                        sx={{width: 300}}
-                        required
-                    >
-                        {cityItemList.map((city) => (
-                            <MenuItem key={city.name} value={city.name} disabled={disableOption(city)}>
-                                {city.name}
-                            </MenuItem>
-                        ))}
-                    </TextField>
-                    <div style={{height: 16}}></div>
-                    <FormLabel id="demo-radio-buttons-group-label">规划策略</FormLabel>
-                    <RadioGroup
-                        row
-                        aria-labelledby="demo-radio-buttons-group-label"
-                        value={strategy}
-                        onChange={(event) => {
-                            setStrategy(event.target.value)
-                        }}
-                        name="radio-buttons-group"
-                    >
-                        <FormControlLabel value="fastest" control={<Radio/>} label="最快"/>
-                        <FormControlLabel value="cheapest" control={<Radio/>} label="最省钱"/>
-                        <FormControlLabel value="leastTransfers" control={<Radio/>} label="最少中转"/>
-                    </RadioGroup>
-                    <div style={{height: 16}}></div>
-                    {strategy === "fastest" &&
+        <>
+            <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
+                <h1>Route Plan</h1>
+                <div>
+                    <FormControl>
+                        <FormLabel id="demo-radio-buttons-group-label">城市选择</FormLabel>
                         <TextField
-                            label="开始时间"
-                            type="time"
-                            value={start_time}
-                            onChange={(event) => setStart_time(event.target.value)}
+                            select
+                            label="起始城市"
+                            value={startCity}
+                            onChange={(event) => setStartCity(event.target.value)}
                             sx={{width: 300}}
                             required
-                        />
-                    }
-                </FormControl>
-                <div style={{height: 16}}></div>
-                <Button style={{marginTop: 16}} variant="contained"
-                        onClick={() => {
-                            handlePlan(startCity, endCity, strategy, start_time)
-                        }}
-                        disabled={!startCity || !endCity}>开始规划</Button>
-            </div>
-            <div>
-                {loading && <div>loading...</div>}
-                {error && <div>{error.message}</div>}
-                {routeData.length > 0 && (
-                    <div>
-                        <h2>规划结果</h2>
-                        <TransportList transports={routeData}/>
-                        <p>总耗时：<span>{int2time(total_time)}</span>
-                        </p>
-                        <p>总花费：<span>{total_price}￥</span></p>
-                        {pathMap != "" && <MermaidChart chart={pathMap}/>}
+                        >
+                            {cityItemList.map((city) => (
+                                <MenuItem key={city.name} value={city.name} disabled={disableOption(city)}>
+                                    {city.name}
+                                </MenuItem>
+                            ))}
+                        </TextField>
+                        <div style={{height: 16}}></div>
+                        <TextField
+                            select
+                            label="目标城市"
+                            value={endCity}
+                            onChange={(event) => setEndCity(event.target.value)}
+                            sx={{width: 300}}
+                            required
+                        >
+                            {cityItemList.map((city) => (
+                                <MenuItem key={city.name} value={city.name} disabled={disableOption(city)}>
+                                    {city.name}
+                                </MenuItem>
+                            ))}
+                        </TextField>
+                        <div style={{height: 16}}></div>
+                        <FormLabel id="demo-radio-buttons-group-label">规划策略</FormLabel>
+                        <RadioGroup
+                            row
+                            aria-labelledby="demo-radio-buttons-group-label"
+                            value={strategy}
+                            onChange={(event) => {
+                                setStrategy(event.target.value)
+                            }}
+                            name="radio-buttons-group"
+                        >
+                            <FormControlLabel value="fastest" control={<Radio/>} label="最快"/>
+                            <FormControlLabel value="cheapest" control={<Radio/>} label="最省钱"/>
+                            <FormControlLabel value="leastTransfers" control={<Radio/>} label="最少中转"/>
+                        </RadioGroup>
+                        <div style={{height: 16}}></div>
+                        {strategy === "fastest" &&
+                            <TextField
+                                label="开始时间"
+                                type="time"
+                                value={start_time}
+                                onChange={(event) => setStart_time(event.target.value)}
+                                sx={{width: 300}}
+                                required
+                            />
+                        }
+                    </FormControl>
+                    <div style={{height: 16}}></div>
+                    <Button style={{marginTop: 16}} variant="contained"
+                            onClick={() => {
+                                handlePlan(startCity, endCity, strategy, start_time)
+                            }}
+                            disabled={!startCity || !endCity}>开始规划</Button>
+                </div>
+                <div>
+                    {loading && <div>loading...</div>}
+                    {error && <div>{error.message}</div>}
+                    {routeData.length > 0 && (
+                        <div>
+                            <h2>规划结果</h2>
+                            <TransportList transports={routeData}/>
+                            <p>总耗时：<span>{int2time(total_time)}</span>
+                            </p>
+                            <p>总花费：<span>{total_price}￥</span></p>
 
-                    </div>
-                )}
-                {routeData.length === 0 && !loading && !error && (
-                    <div style={{marginTop: 10}}>无可用路径</div>
-                )
-                }
+                        </div>
+                    )}
+                    {routeData.length === 0 && !loading && !error && (
+                        <div style={{marginTop: 10}}>无可用路径</div>
+                    )
+                    }
+                </div>
             </div>
-        </div>
+            {pathMap != "" && <MermaidChart chart={pathMap}/>}
+        </>
     )
 }
