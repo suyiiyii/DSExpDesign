@@ -7,6 +7,7 @@ import {planRoute} from "./routePlanSlice";
 
 
 import {TransportList} from "../transportManager/TransportList";
+import MermaidChart from "../../utils/mermaid/MermaidChart";
 
 function time2int(timestr: string): number {
     /** Convert time string to integer */
@@ -27,7 +28,7 @@ export default function PlanView() {
     const [strategy, setStrategy] = useState("fastest");
     const [start_time, setStart_time] = useState("08:00");
     const dispatch = useAppDispatch();
-    const {routeData,total_price,total_time, loading, error} = useAppSelector(state => state.routePlan)
+    const {routeData, total_price, total_time, pathMap, loading, error} = useAppSelector(state => state.routePlan)
     const cityItemList = cityList.map((city) => {
         return {
             ...city,
@@ -126,6 +127,8 @@ export default function PlanView() {
                         <p>总耗时：<span>{int2time(total_time)}</span>
                         </p>
                         <p>总花费：<span>{total_price}￥</span></p>
+                        {pathMap != "" && <MermaidChart chart={pathMap}/>}
+
                     </div>
                 )}
                 {routeData.length === 0 && !loading && !error && (

@@ -34,6 +34,7 @@ const routePlanSlice = createSlice({
         total_price: 0,
         total_time: 0,
         loading: false,
+        pathMap: "",
         error: null as null | SerializedError
     },
     reducers: {
@@ -49,6 +50,7 @@ const routePlanSlice = createSlice({
             state.routeData = action.payload.path;
             state.total_price = action.payload.total_price;
             state.total_time = action.payload.total_time;
+            state.pathMap = action.payload.pathMap;
             state.loading = false;
             state.error = null;
         }).addCase(planRoute.rejected, (state, action) => {

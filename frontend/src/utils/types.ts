@@ -17,6 +17,7 @@ export interface PlanResult {
     path: Transport[];
     total_price: number;
     total_time: number;
+    pathMap: string;
 }
 
 export interface ResultStatus {

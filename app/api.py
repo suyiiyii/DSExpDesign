@@ -84,11 +84,15 @@ class RoutePlanResp:
     path: list[Transport]
     total_price: int
     total_time: int
+    pathMap: str
 
 @api.post("/routePlan", response_model=RoutePlanResp)
-async def get_route_plan(req: RoutePlanReq, tm: TransportMap = Depends(tm_obj)):
+async def get_route_plan(req: RoutePlanReq, tm: TransportMap = Depends(tm_obj), db: Database = Depends(db_obj)):
     data = RoutePlanner.plan(tm, req.start, req.end, req.strategy, req.start_time)
-    return RoutePlanResp(path=data[0], total_price=data[1], total_time=data[2])
+    if len(db.transports) > 100:
+        return RoutePlanResp(path=data[0], total_price=data[1], total_time=data[2], pathMap="")
+    return RoutePlanResp(path=data[0], total_price=data[1], total_time=data[2],
+                         pathMap=db.generate_graph_with_path(data[0]))
 
 
 api.mount("", app=StaticFiles(directory="app/static", html=True), name="static")

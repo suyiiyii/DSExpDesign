@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, {useEffect, useRef} from "react";
 import mermaid from "mermaid";
 
 const MermaidChart = ({ chart }:{chart:string}) => {
@@ -10,7 +10,7 @@ const MermaidChart = ({ chart }:{chart:string}) => {
     }, [chart]);
 
     return (
-        <div>
+        <div key={chart}>
             <div className="mermaid" ref={chartRef}>
                 {chart}
             </div>

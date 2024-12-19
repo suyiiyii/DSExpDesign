@@ -35,7 +35,8 @@ class Database:
         graph += "graph\n"
         '''深圳 -- G2944 --> 广州'''
         for transport in self._transports:
-            graph += f"\t{transport.start} -- {transport.run_id}  {transport.price}￥<br/>{transport.start_time} - {transport.end_time} --> {transport.end}\n"
+            graph += (f"\t{transport.start} -- {transport.run_id}  {transport.price}￥<br/>"
+                      f"{transport.start_time} - {transport.end_time} --> {transport.end}\n")
         return graph
 
     def _save_route_map(self):
@@ -67,6 +68,18 @@ class Database:
     @property
     def route_map(self) -> str:
         return self._generate_graph()
+
+    def generate_graph_with_path(self, path: list[Transport]) -> str:
+        graph = ""
+        graph += "graph\n"
+        for transport in self._transports:
+            if transport in path:
+                graph += (f"\t{transport.start} == {transport.run_id}  {transport.price}￥<br/>"
+                          f"{transport.start_time} - {transport.end_time} ==> {transport.end}\n")
+            else:
+                graph += (f"\t{transport.start} -- {transport.run_id}  {transport.price}￥<br/>"
+                          f"{transport.start_time} - {transport.end_time} --> {transport.end}\n")
+        return graph
 
     def add_city(self, city: City):
         self._cities.append(city)
