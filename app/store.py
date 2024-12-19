@@ -35,7 +35,7 @@ class Database:
         graph += "graph\n"
         '''深圳 -- G2944 --> 广州'''
         for transport in self._transports:
-            graph += f"\t{transport.start} -- {transport.run_id} --> {transport.end}\n"
+            graph += f"\t{transport.start} -- {transport.run_id}  {transport.price}￥<br/>{transport.start_time} - {transport.end_time} --> {transport.end}\n"
         return graph
 
     def _save_route_map(self):
