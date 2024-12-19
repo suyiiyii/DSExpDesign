@@ -1,0 +1,32 @@
+[
+  {
+    "type": "train",
+    "name": "T169",
+    "start": "上海",
+    "end": "杭州",
+    "price": 28,
+    "start_time": "11:26",
+    "end_time": "13:29",
+    "run_id": "T169"
+  },
+  {
+    "type": "train",
+    "name": "T169",
+    "start": "杭州",
+    "end": "广州",
+    "price": 161,
+    "start_time": "13:35",
+    "end_time": "04:51",
+    "run_id": "T169"
+  },
+  {
+    "type": "train",
+    "name": "K230",
+    "start": "厦门",
+    "end": "广州",
+    "price": 102,
+    "start_time": "17:26",
+    "end_time": "04:51",
+    "run_id": "K230"
+  }
+]
